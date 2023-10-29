@@ -11,13 +11,13 @@ const activeView = computed(() => {
 </script>
 
 <template>
-	<KeepAlive>
-		<div class="h-screen overflow-hidden flex justify-center">
-			<!-- Header -->
+	<div class="h-screen overflow-hidden flex justify-center">
+		<!-- Header -->
+		<KeepAlive>
 			<ViewHeader />
+		</KeepAlive>
 
-			<!-- View -->
-			<component :is="activeView" />
-		</div>
-	</KeepAlive>
+		<!-- View -->
+		<component :is="activeView" />
+	</div>
 </template>
