@@ -1,7 +1,7 @@
 <script setup lang="ts">
-let instances: string[] = [];
-if (useRuntimeConfig().public.defaultAPI)
-	instances.push(useRuntimeConfig().public.defaultAPI);
+// get state
+import useStore from "~/stores";
+const store = useStore();
 
 // individual panel style
 const panelStyleBase =
@@ -45,10 +45,10 @@ const panelStyle = [
 				</div>
 			</li>
 			<li
-				v-for="(apiURL, _index) in instances"
+				v-for="(_apiURL, index) in store.instances"
 				class="flex justify-center mb-3"
 			>
-				<InstancePanel :panelStyle="panelStyle" :apiURL="apiURL" />
+				<InstancePanel :panelStyle="panelStyle" :instanceID="index" />
 			</li>
 		</ul>
 	</div>

@@ -1,65 +1,25 @@
 <script setup lang="ts">
+// utility functions
+import { pkmnRef } from "~/utility";
+
+// get state
+import useStore from "~/stores";
+const store = useStore();
+
 // props
 const props = defineProps<{
-	apiURL: string;
+	instanceID: number;
 	panelStyle: string[];
 }>();
-
-// helper functions
-let pkmnRef = (pokemon: IPokemon) => {
-	return pokemon.natID + (pokemon.shiny ? "-shiny" : "");
-};
-
-// api data
-let data: Ref<IInstanceData> = ref({
-	trainer: {},
-	items: {},
-	party: {},
-	encounter_log: {},
-	shiny_log: {},
-	encounter_rate: {},
-	stats: {},
-});
-// update instance data
-for (const key in data.value) {
-	await useFetch("http://" + props.apiURL + "/" + key, {
-		method: "GET",
-	}).then((response) => {
-		data.value[
-			key as
-				| "trainer"
-				| "items"
-				| "party"
-				| "encounter_log"
-				| "shiny_log"
-				| "encounter_rate"
-				| "stats"
-		] = response.data.value;
-	});
-}
-
-// pokeAPI for sprites
-const pokeAPI = "https://pokeapi.co/api/v2/pokemon/";
-let pokemonSprite: Ref<{ [key: string]: string }> = ref({});
-
-// update pokemon sprites
-for (const pokemon of data.value.party as IPokemon[]) {
-	if (!pokemonSprite.value[pkmnRef(pokemon)])
-		await useFetch(pokeAPI + pokemon.natID, {
-			method: "GET",
-		}).then((response) => {
-			pokemonSprite.value[pkmnRef(pokemon)] = pokemon.shiny
-				? (response.data.value as any).sprites.front_shiny
-				: (response.data.value as any).sprites.front_default;
-		});
-}
 </script>
 
 <template>
 	<!-- Trainer Info -->
 	<div :class="panelStyle[0]">
 		<div class="flex justify-center items-center">
-			<p class="text-sm">{{ (data.trainer as ITrainer).name }}</p>
+			<p class="text-sm">
+				{{ (store.instanceData[instanceID].trainer as ITrainer).name }}
+			</p>
 		</div>
 	</div>
 
@@ -67,7 +27,7 @@ for (const pokemon of data.value.party as IPokemon[]) {
 	<div :class="panelStyle[1]">
 		<ul>
 			<li
-				v-for="(pokemon, index) of data.party"
+				v-for="(pokemon, index) of store.instanceData[instanceID].party"
 				class="flex flex-col my-2"
 			>
 				<span class="flex items-center">
@@ -76,7 +36,7 @@ for (const pokemon of data.value.party as IPokemon[]) {
 						class="bg-light-primary dark:bg-dark-primary rounded-lg mr-2 p-2 flex justify-center items-center"
 					>
 						<img
-							:src="pokemonSprite[pkmnRef(pokemon)]"
+							:src="store.pokemonSprites[pkmnRef(pokemon)]"
 							:title="(pokemon as IPokemon).name + ((pokemon as IPokemon).shiny ? ' (Shiny)' : '')"
 						/>
 					</div>

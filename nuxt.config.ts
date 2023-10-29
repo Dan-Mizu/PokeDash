@@ -7,7 +7,11 @@ export default defineNuxtConfig({
 		head: {
 			title: "PokéDash",
 			link: [
-				{ rel: "icon", type: "image/x-icon", href: "/favicons/favicon.ico" },
+				{
+					rel: "icon",
+					type: "image/x-icon",
+					href: "/favicons/favicon.ico",
+				},
 				{
 					rel: "canonical",
 					href: url,
@@ -58,5 +62,10 @@ export default defineNuxtConfig({
 			pathPrefix: false,
 		},
 	],
-	modules: ["@nuxt/ui", "nuxt-icon"], // includes @nuxtjs/tailwindcss and @nuxtjs/color-mode
+	modules: [
+		"@nuxt/ui",
+		"nuxt-icon",
+		"@pinia/nuxt",
+		"@pinia-plugin-persistedstate/nuxt",
+	], // includes @nuxtjs/tailwindcss and @nuxtjs/color-mode
 });
