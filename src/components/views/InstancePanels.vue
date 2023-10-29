@@ -1,6 +1,7 @@
 <script setup lang="ts">
 let instances: string[] = [];
-instances.push(useRuntimeConfig().public.defaultAPI)
+if (useRuntimeConfig().public.defaultAPI)
+	instances.push(useRuntimeConfig().public.defaultAPI);
 </script>
 
 <template>

@@ -46,6 +46,11 @@ export default defineNuxtConfig({
 		},
 	},
 	devtools: { enabled: true },
+	runtimeConfig: {
+		public: {
+			defaultAPI: process.env.DEFAULT_INSTANCE_API_URL,
+		},
+	},
 	srcDir: "src",
 	components: [
 		{
@@ -54,9 +59,4 @@ export default defineNuxtConfig({
 		},
 	],
 	modules: ["@nuxt/ui", "nuxt-icon"], // includes @nuxtjs/tailwindcss and @nuxtjs/color-mode
-	runtimeConfig: {
-		public: {
-			defaultAPI: process.env.DEFAULT_INSTANCE_API_URL,
-		},
-	},
 });

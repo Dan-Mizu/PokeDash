@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
 	<Icon
@@ -8,5 +7,5 @@
 		aria-hidden="true"
 		viewBox="0 0 100 101"
 		fill="none"
-	></Icon>
+	/>
 </template>
