@@ -9,6 +9,15 @@ interface IInstanceData {
 	stats: unknown;
 }
 
+type InstanceDataKey =
+	| "trainer"
+	| "items"
+	| "party"
+	| "encounter_log"
+	| "shiny_log"
+	| "encounter_rate"
+	| "stats";
+
 /** Trainer API Response */
 interface ITrainer {
 	coords: {

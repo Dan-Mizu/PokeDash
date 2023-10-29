@@ -63,9 +63,15 @@ export default defineNuxtConfig({
 		},
 	],
 	modules: [
-		"@nuxt/ui",
+		"@nuxt/ui", // includes @nuxtjs/tailwindcss and @nuxtjs/color-mode
 		"nuxt-icon",
 		"@pinia/nuxt",
 		"@pinia-plugin-persistedstate/nuxt",
-	], // includes @nuxtjs/tailwindcss and @nuxtjs/color-mode
+	],
+	ui: {
+		icons: ["tabler", "material-symbols"],
+	},
+	colorMode: {
+		classSuffix: "",
+	},
 });

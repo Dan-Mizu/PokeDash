@@ -28,6 +28,10 @@ export default {
 				sans: ["Open Sans", "sans-serif"],
 				display: ["Roboto"],
 			},
+
+			screens: {
+				full: "1348px",
+			},
 		},
 	},
 

@@ -1,37 +1,23 @@
 <script setup lang="ts">
+// theme
 const colorMode = useColorMode();
 
-const isDark = computed({
-	get() {
-		return colorMode.value === "dark";
-	},
-	set() {
-		colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
-	},
-});
+// local dark mode value
+const darkMode = ref(colorMode.value === "dark");
+const toggleTheme = () => {
+	// toggle local dark mode value
+	darkMode.value = !darkMode.value;
+
+	// set theme
+	colorMode.preference = darkMode.value ? "dark" : "light";
+};
 </script>
 
 <template>
-	<ClientOnly>
-		<UButton
-			:icon="
-				isDark
-					? 'i-heroicons-moon-20-solid'
-					: 'i-heroicons-sun-20-solid'
-			"
-			:ui="{
-				color: {
-					primary: {
-						solid: 'text-light-text dark:text-dark-text hover:bg-light-secondary dark:hover:bg-dark-secondary focus:outline-none',
-					},
-				},
-			}"
-			aria-label="Theme"
-			@click="isDark = !isDark"
-		/>
-
-		<template #fallback>
-			<div class="w-8 h-8" />
-		</template>
-	</ClientOnly>
+	<IconButton
+		:icon="
+			darkMode ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'
+		"
+		@clickEvent="toggleTheme"
+	/>
 </template>
