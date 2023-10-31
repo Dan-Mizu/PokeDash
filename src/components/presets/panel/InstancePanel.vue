@@ -21,7 +21,7 @@ const props = defineProps<{
 	/>
 	<div v-else :class="panelStyle[0]">
 		<div class="flex justify-center items-center">
-			<p class="text-sm">
+			<p class="text-sm text-bold">
 				Name: {{ (store.instanceData[instanceID].trainer as ITrainer).name }}
 				<div>
 				<div>
