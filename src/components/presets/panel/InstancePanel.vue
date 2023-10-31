@@ -22,7 +22,17 @@ const props = defineProps<{
 	<div v-else :class="panelStyle[0]">
 		<div class="flex justify-center items-center">
 			<p class="text-sm">
-				{{ (store.instanceData[instanceID].trainer as ITrainer).name }}
+				Name: {{ (store.instanceData[instanceID].trainer as ITrainer).name }}
+				<div>
+				TID: {{ (store.instanceData[instanceID].trainer as ITrainer).tid }}
+				</div>
+				SID: {{ (store.instanceData[instanceID].trainer as ITrainer).sid }}
+				<div>
+				Current Map: {{ (store.instanceData[instanceID].trainer as ITrainer).map_name }}
+				</div>
+				<div>
+				Current coords: {{ (store.instanceData[instanceID].trainer as ITrainer).coords }}
+				</div>
 			</p>
 		</div>
 	</div>
