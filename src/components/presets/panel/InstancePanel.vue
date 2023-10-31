@@ -24,6 +24,9 @@ const props = defineProps<{
 			<p class="text-sm">
 				Name: {{ (store.instanceData[instanceID].trainer as ITrainer).name }}
 				<div>
+				<div>
+				Gender: {{ (store.instanceData[instanceID].trainer as ITrainer).gender }}
+				</div>
 				TID: {{ (store.instanceData[instanceID].trainer as ITrainer).tid }}
 				</div>
 				SID: {{ (store.instanceData[instanceID].trainer as ITrainer).sid }}
@@ -32,6 +35,9 @@ const props = defineProps<{
 				</div>
 				<div>
 				Current coords: {{ (store.instanceData[instanceID].trainer as ITrainer).coords }}
+				</div>
+				<div>
+				On Bike: {{ (store.instanceData[instanceID].trainer as ITrainer).on_bike }}
 				</div>
 			</p>
 		</div>
