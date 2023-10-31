@@ -14,8 +14,10 @@ export default defineStore(
 	() => {
 		// values
 		const instances: Ref<string[]> = ref(
-			useRuntimeConfig().public.defaultAPI
-				? [useRuntimeConfig().public.defaultAPI]
+			useRuntimeConfig().public.defaultAPIs
+				? useRuntimeConfig()
+						.public.defaultAPIs.replaceAll(" ", "")
+						.split(",")
 				: []
 		);
 		const instanceData: Ref<IInstanceData[]> = ref(defaults.instanceData);
@@ -39,7 +41,10 @@ export default defineStore(
 			if (key === "party" && instanceData.value[instanceID][key] != null)
 				updatePokemonSpriteCache(instanceID);
 		};
-		const fetchAllInstanceEndpointData = async (instanceID: number, force: boolean = false) => {
+		const fetchAllInstanceEndpointData = async (
+			instanceID: number,
+			force: boolean = false
+		) => {
 			// init/reset instance data
 			instanceData.value[instanceID] = {
 				trainer: {},
@@ -57,7 +62,8 @@ export default defineStore(
 				while (
 					!dataExists(
 						instanceData.value[instanceID][key as InstanceDataKey]
-					) && force
+					) &&
+					force
 				)
 					// fetch individual endpoints
 					await fetchInstanceEndpointData(

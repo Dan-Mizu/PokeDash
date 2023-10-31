@@ -52,7 +52,7 @@ export default defineNuxtConfig({
 	devtools: { enabled: true },
 	runtimeConfig: {
 		public: {
-			defaultAPI: process.env.DEFAULT_INSTANCE_API_URL,
+			defaultAPIs: process.env.DEFAULT_INSTANCE_API_URLS,
 		},
 	},
 	srcDir: "src",
