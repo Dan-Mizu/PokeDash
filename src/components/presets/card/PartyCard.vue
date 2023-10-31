@@ -10,19 +10,23 @@ const props = defineProps<{
 	panelStyle: string;
 	partyData: IPokemon[];
 }>();
+const partyDataWithMoves = props.partyData.map(pokemon => ({
+  ...pokemon,
+  showMoves: false
+  }));
 </script>
 
 <template>
 	<div :class="panelStyle">
-		<ul>
+		<ul class="grid grid-cols-2 gap-1">
 			<li
 				v-for="(pokemon, _index) of partyData"
-				class="flex flex-col my-2"
+				class="flex flex-col my-0 mx-1 pt-0 p-0 col-span-1"
 			>
 				<span class="flex items-center">
 					<!-- Pokemon Sprite -->
 					<div
-						class="bg-light-primary dark:bg-dark-primary rounded-lg mx-1 p-2 flex justify-center items-center min-w-[25%]"
+						class="bg-light-primary dark:bg-dark-primary rounded-lg mx-1 p-4 flex justify-center items-center min-w-[25%]"
 					>
 						<Spinner
 							v-if="!store.pokemonSprites[pkmnRef(pokemon)]"
@@ -36,7 +40,7 @@ const props = defineProps<{
 
 					<!-- Pokemon Info -->
 					<div
-						class="bg-light-primary dark:bg-dark-primary rounded-lg flex-1 justify-center py-1 px-6 mx-1 items-start full:block hidden"
+						class="bg-light-primary dark:bg-dark-primary rounded-lg flex-1 justify-center py-0 px-2 items-start full:block hidden"
 					>
 						<!-- Name / Shiny -->
 						<div
@@ -106,6 +110,18 @@ const props = defineProps<{
 									{{ (pokemon as IPokemon).item.name }}</span
 								>
 							</span>
+						</div>
+					
+					<!-- Collapsible Moves Section -->
+						<button @click="pokemon.showMoves = !pokemon.showMoves" class="text-sm underline cursor-pointer mt-2">
+						Moves
+						</button>
+						<div v-if="pokemon.showMoves" class="mt-1 pt-1 mx-1 py-1 text-size-flex-1">
+							<ul>
+								<li v-for="move in pokemon.moves" :key="move.id" class="text-xs">
+									{{ move.name }} - Power: {{ move.power }} - PP: {{ move.pp }}
+								</li>
+							</ul>
 						</div>
 					</div>
 				</span>
