@@ -24,7 +24,11 @@ const props = defineProps<{
 					<div
 						class="bg-light-primary dark:bg-dark-primary rounded-lg mx-1 p-2 flex justify-center items-center min-w-[25%]"
 					>
+						<Spinner
+							v-if="!store.pokemonSprites[pkmnRef(pokemon)]"
+						/>
 						<img
+							v-else
 							:src="store.pokemonSprites[pkmnRef(pokemon)]"
 							:title="(pokemon as IPokemon).name + ((pokemon as IPokemon).shiny ? ' (Shiny)' : '')"
 						/>

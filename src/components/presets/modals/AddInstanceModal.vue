@@ -25,6 +25,7 @@ const submit = () => {
 		store.instances.push(input);
 
 		// queue instance api fetch
+		store.fetchAllInstanceEndpointData(store.instances.length - 1)
 	}
 };
 </script>
@@ -56,11 +57,11 @@ const submit = () => {
 				class="flex float-right font-bold text-light-text dark:text-dark-text bg-light-accent dark:bg-dark-accent"
 				@click="
 					() => {
-						// submit input
-						submit();
-
 						// close modal
 						$emit('closeModal');
+
+						// submit input
+						submit();
 					}
 				"
 				>Add</UButton

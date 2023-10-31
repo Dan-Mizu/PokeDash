@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // utility functions
-import { pkmnRef, dataExists } from "~/utility";
+import { dataExists } from "~/utility";
 
 // get state
 import useStore from "~/stores";

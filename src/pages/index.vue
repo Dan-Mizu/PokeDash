@@ -16,11 +16,11 @@ onMounted(async () => {
 	// no longer loading
 	activeView.value = InstancePanels;
 
-	// // update instance data for all stored instances
-	// store.instances.forEach(async (_data, index) => {
-	// 	// update instance data
-	// 	await store.fetchAllInstanceEndpointData(index);
-	// });
+	// update instance data for all stored instances
+	store.instances.forEach(async (_data, index) => {
+		// update instance data (force to keep fetching if no response)
+		store.fetchAllInstanceEndpointData(index, true);
+	});
 });
 </script>
 
