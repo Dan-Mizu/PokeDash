@@ -50,7 +50,7 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 			<!-- Individual Pokemon -->
 			<li
 				v-for="(pokemon, index) of data"
-				class="m-1 gap-1 flex flex-row items-center justify-center"
+				class="m-1 gap-1 flex flex-row p-0 mx-1 items-center justify-center"
 			>
 				<!-- Pokemon Sprite -->
 				<div
@@ -58,7 +58,7 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 						!expandedInfoVisible[index] ||
 						viewport.isLessThan('full')
 					"
-					class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center p-2"
+					class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center w-full mx-0 p-4 m-0"
 				>
 					<Spinner v-if="!store.pokemonSprites[pkmnRef(pokemon)]" />
 					<img
