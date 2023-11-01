@@ -33,7 +33,7 @@ const props = defineProps<{
 	<PartyCard
 		v-else
 		:panel-style="panelStyle[1]"
-		:data="(store.instanceData[instanceID].party as IPokemon[])"
+		:data="(store.instanceData[instanceID].party as TParty)"
 	/>
 
 	<!-- Encounter Info -->

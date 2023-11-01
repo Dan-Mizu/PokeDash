@@ -51,7 +51,7 @@ export default defineStore(
 			// update pokemon sprite cache
 			if (
 				key === "party" &&
-				(instanceData.value[instanceID].party as IPokemon[]).length > 0
+				(instanceData.value[instanceID].party as TParty).length > 0
 			)
 				updatePokemonSpriteCache(instanceID);
 		};
@@ -83,7 +83,7 @@ export default defineStore(
 		const updatePokemonSpriteCache = async (instanceID: number) => {
 			// loop through pokemon in party of instance
 			for (const pokemon of instanceData.value[instanceID]
-				.party as IPokemon[]) {
+				.party as TParty) {
 				// if pokemon's sprite isn't cached, then fetch and cache it
 				if (!pokemonSprites.value[pkmnRef(pokemon)])
 					await useFetch(pokeAPI + pokemon.natID).then((response) => {
