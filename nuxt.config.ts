@@ -67,11 +67,30 @@ export default defineNuxtConfig({
 		"nuxt-icon",
 		"@pinia/nuxt",
 		"@pinia-plugin-persistedstate/nuxt",
+		"nuxt-viewport",
 	],
 	ui: {
 		icons: ["tabler", "material-symbols"],
 	},
 	colorMode: {
 		classSuffix: "",
+	},
+	viewport: {
+		breakpoints: {
+			mobile: 320,
+			mobileMedium: 375,
+			mobileWide: 425,
+			tablet: 768,
+			desktop: 1024,
+			full: 1348,
+			desktopWide: 1600,
+		},
+		cookieName: "viewport",
+		defaultBreakpoints: {
+			desktop: "desktop",
+			mobile: "mobile",
+			tablet: "tablet",
+		},
+		fallbackBreakpoint: "desktop",
 	},
 });

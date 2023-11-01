@@ -8,7 +8,9 @@ const props = defineProps<{
 
 <template>
 	<div :class="panelStyle">
-		<div class="flex flex-col w-full p-3">
+		<div
+			class="flex flex-col w-full p-3 text-light-text dark:text-dark-text"
+		>
 			<!-- Character Data -->
 			<div class="flex flex-row justify-center mb-2">
 				<!-- Name -->
@@ -35,7 +37,7 @@ const props = defineProps<{
 
 			<!-- IDs -->
 			<div
-				class="flex flex-row bg-light-primary dark:bg-dark-primary rounded-md p-1 mb-2"
+				class="flex flex-row bg-light-primary dark:bg-dark-primary rounded-md py-1 px-2 text-xs"
 			>
 				<div class="flex-grow text-left">TID: {{ data.tid }}</div>
 				<div class="flex-grow text-right">SID: {{ data.sid }}</div>
@@ -43,9 +45,9 @@ const props = defineProps<{
 
 			<!-- Location -->
 			<div
-				class="bg-light-primary dark:bg-dark-primary rounded-md p-1 mb-2"
+				class="bg-light-primary dark:bg-dark-primary rounded-md p-1 mb-2 text-sm text-center my-2 py-2 px-3"
 			>
-				<p>
+				<p class="whitespace-pre-wrap">
 					Currently in
 					<span class="font-bold inline-block">
 						{{
@@ -58,9 +60,12 @@ const props = defineProps<{
 						}}
 					</span>
 					<span v-if="data.on_bike">, on a bike.</span>
+					<span v-else>.</span>
 				</p>
 				<!-- Coords -->
-				<span>
+				<span
+					class="flex justify-center items-center text-center mt-2 text-xs"
+				>
 					(X: {{ data.coords[0] }}, Y: {{ data.coords[1] }})
 				</span>
 			</div>

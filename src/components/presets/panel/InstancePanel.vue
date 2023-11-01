@@ -20,6 +20,7 @@ const props = defineProps<{
 		v-if="!dataExists(store.instanceData[instanceID].trainer)"
 	/>
 	<TrainerCard
+		v-else
 		:panel-style="panelStyle[0]"
 		:data="(store.instanceData[instanceID].trainer as ITrainer)"
 	/>
