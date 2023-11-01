@@ -12,7 +12,7 @@ const props = defineProps<{
 			<!-- Character Data -->
 			<div class="flex flex-row justify-center mb-2">
 				<!-- Name -->
-				<span class="mr-2 text-lg text-bold flex items-center">
+				<span class="mr-2 text-lg font-bold flex items-center">
 					{{ data.name }}
 				</span>
 
@@ -41,25 +41,28 @@ const props = defineProps<{
 				<div class="flex-grow text-right">SID: {{ data.sid }}</div>
 			</div>
 
-			<!-- Map -->
+			<!-- Location -->
 			<div
-				class="flex flex-row bg-light-primary dark:bg-dark-primary rounded-md p-1 mb-2"
+				class="bg-light-primary dark:bg-dark-primary rounded-md p-1 mb-2"
 			>
-				Current Map: {{ data.map_name }}
-			</div>
-
-			<!-- Current Coords -->
-			<div
-				class="flex flex-row bg-light-primary dark:bg-dark-primary rounded-md p-1 mb-2"
-			>
-				Current coords: {{ data.coords }}
-			</div>
-
-			<!-- Bike -->
-			<div
-				class="flex flex-row bg-light-primary dark:bg-dark-primary rounded-md p-1"
-			>
-				On Bike: {{ data.on_bike }}
+				<p>
+					Currently in
+					<span class="font-bold inline-block">
+						{{
+							data.map_name
+								.replaceAll("_", " ")
+								.toLowerCase()
+								.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+									letter.toUpperCase()
+								)
+						}}
+					</span>
+					<span v-if="data.on_bike">, on a bike.</span>
+				</p>
+				<!-- Coords -->
+				<span>
+					(X: {{ data.coords[0] }}, Y: {{ data.coords[1] }})
+				</span>
 			</div>
 		</div>
 	</div>
