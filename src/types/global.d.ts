@@ -38,7 +38,6 @@ interface ITrainer {
 	tid: number;
 }
 
-// TODO: This should include almost everything now. Remind me if not.
 /** Items Data */
 interface IItems {
 	"Berries": {
@@ -50,17 +49,17 @@ interface IItems {
 		"Persim Berry": number,
 		"Rawst Berry": number,
 		"Spelon Berry": number,
-		"Watmel Berry": number, // Added Watmel Berry to the list
-		"Durin Berry": number, // Added Durin Berry to the list
-		"Belue Berry": number, // Added Belue Berry to the list
-		"Liechi Berry": number, // Added Liechi Berry to the list
-		"Ganlon Berry": number, // Added Ganlon Berry to the list
-		"Salac Berry": number, // Added Salac Berry to the list
-		"Petaya Berry": number, // Added Petaya Berry to the list
-		"Apicot Berry": number, // Added Apicot Berry to the list
-		"Lansat Berry": number, // Added Lansat Berry to the list
-		"Starf Berry": number, // Added Starf Berry to the list
-		"Enigma Berry": number, // Added Enigma Berry to the list
+		"Watmel Berry": number,
+		"Durin Berry": number,
+		"Belue Berry": number,
+		"Liechi Berry": number,
+		"Ganlon Berry": number,
+		"Salac Berry": number,
+		"Petaya Berry": number,
+		"Apicot Berry": number,
+		"Lansat Berry": number,
+		"Starf Berry": number,
+		"Enigma Berry": number,
 	};
 	"Items": {
 		Awakening: number,
@@ -68,7 +67,7 @@ interface IItems {
 		Carbos: number,
 		"Escape Rope": number,
 		Ether: number,
-		"Exp. Share": number, // Added Exp. Share to the list
+		"Exp. Share": number,
 		"Full Restore": number,
 		"Hyper Potion": number,
 		"Leaf Stone": number,
@@ -78,7 +77,7 @@ interface IItems {
 		"PP Up": number,
 		Potion: number,
 		Protein: number,
-		"Quick Claw": number, // Added Quick Claw to the list
+		"Quick Claw": number,
 		Repel: number,
 		Revive: number,
 		Stardust: number,
@@ -86,19 +85,19 @@ interface IItems {
 		"White Flute": number,
 		"X Defend": number,
 		Zinc: number,
-		"Potion": number, // Added Potion to the list
-		"Antidote": number, // Added Antidote to the list
-		"Burn Heal": number, // Added Burn Heal to the list
-		"Ice Heal": number, // Added Ice Heal to the list
-		"Paralyze Heal": number, // Added Paralyze Heal to the list
-		"Full Heal": number, // Added Full Heal to the list
+		"Potion": number,
+		"Antidote": number,
+		"Burn Heal": number,
+		"Ice Heal": number,
+		"Paralyze Heal": number,
+		"Full Heal": number,
 		"Awakening": number,
-		"Parlyz Heal": number, // Added Parlyz Heal to the list
+		"Parlyz Heal": number,
 		"Revival Herb": number,
 		"Ether": number,
-		"Max Ether": number, // Added Max Ether to the list
+		"Max Ether": number,
 		"Elixir": number,
-		"Max Elixir": number, // Added Max Elixir to the list
+		"Max Elixir": number,
 		"Lava Cookie": number,
 		"Blue Flute": number,
 		"Yellow Flute": number,
@@ -161,58 +160,58 @@ interface IItems {
 		"White Flute": number,
 		"X Defend": number,
 		Zinc: number,
-		"Bright Powder": number, // Added Bright Powder to the list
-		"White Herb": number, // Added White Herb to the list
-		"Macho Brace": number, // Added Macho Brace to the list
+		"Bright Powder": number,
+		"White Herb": number,
+		"Macho Brace": number,
 		"Exp. Share": number,
 		"Quick Claw": number,
-		"Soothe Bell": number, // Added Soothe Bell to the list
-		"Mental Herb": number, // Added Mental Herb to the list
-		"Choice Band": number, // Added Choice Band to the list
-		"King's Rock": number, // Added King's Rock to the list
-		"SilverPowder": number, // Added SilverPowder to the list
-		"Amulet Coin": number, // Added Amulet Coin to the list
-		"Cleanse Tag": number, // Added Cleanse Tag to the list
-		"Soul Dew": number, // Added Soul Dew to the list
-		"DeepSeaTooth": number, // Added DeepSeaTooth to the list
-		"DeepSeaScale": number, // Added DeepSeaScale to the list
-		"Smoke Ball": number, // Added Smoke Ball to the list
-		"Everstone": number, // Added Everstone to the list
-		"Focus Band": number, // Added Focus Band to the list
-		"Lucky Egg": number, // Added Lucky Egg to the list
-		"Scope Lens": number, // Added Scope Lens to the list
-		"Metal Coat": number, // Added Metal Coat to the list
-		"Leftovers": number, // Added Leftovers to the list
-		"Dragon Scale": number, // Added Dragon Scale to the list
-		"Light Ball": number, // Added Light Ball to the list
-		"Soft Sand": number, // Added Soft Sand to the list
-		"Hard Stone": number, // Added Hard Stone to the list
-		"Miracle Seed": number, // Added Miracle Seed to the list
-		"BlackGlasses": number, // Added BlackGlasses to the list
-		"Black Belt": number, // Added Black Belt to the list
-		"Magnet": number, // Added Magnet to the list
-		"Mystic Water": number, // Added Mystic Water to the list
-		"Sharp Beak": number, // Added Sharp Beak to the list
-		"Poison Barb": number, // Added Poison Barb to the list
-		"NeverMeltIce": number, // Added NeverMeltIce to the list
-		"Spell Tag": number, // Added Spell Tag to the list
-		"TwistedSpoon": number, // Added TwistedSpoon to the list
-		"Charcoal": number, // Added Charcoal to the list
-		"Dragon Fang": number, // Added Dragon Fang to the list
-		"Silk Scarf": number, // Added Silk Scarf to the list
-		"Up-Grade": number, // Added Up-Grade to the list
-		"Shell Bell": number, // Added Shell Bell to the list
-		"Sea Incense": number, // Added Sea Incense to the list
-		"Lax Incense": number, // Added Lax Incense to the list
-		"Lucky Punch": number, // Added Lucky Punch to the list
-		"Metal Powder": number, // Added Metal Powder to the list
-		"Thick Club": number, // Added Thick Club to the list
-		"Stick": number, // Added Stick to the list
-		"Red Scarf": number, // Added Red Scarf to the list
-		"Blue Scarf": number, // Added Blue Scarf to the list
-		"Pink Scarf": number, // Added Pink Scarf to the list
-		"Green Scarf": number, // Added Green Scarf to the list
-		"Yellow Scarf": number, // Added Yellow Scarf to the list
+		"Soothe Bell": number,
+		"Mental Herb": number,
+		"Choice Band": number,
+		"King's Rock": number,
+		"SilverPowder": number,
+		"Amulet Coin": number,
+		"Cleanse Tag": number,
+		"Soul Dew": number,
+		"DeepSeaTooth": number,
+		"DeepSeaScale": number,
+		"Smoke Ball": number,
+		"Everstone": number,
+		"Focus Band": number,
+		"Lucky Egg": number,
+		"Scope Lens": number,
+		"Metal Coat": number,
+		"Leftovers": number,
+		"Dragon Scale": number,
+		"Light Ball": number,
+		"Soft Sand": number,
+		"Hard Stone": number,
+		"Miracle Seed": number,
+		"BlackGlasses": number,
+		"Black Belt": number,
+		"Magnet": number,
+		"Mystic Water": number,
+		"Sharp Beak": number,
+		"Poison Barb": number,
+		"NeverMeltIce": number,
+		"Spell Tag": number,
+		"TwistedSpoon": number,
+		"Charcoal": number,
+		"Dragon Fang": number,
+		"Silk Scarf": number,
+		"Up-Grade": number,
+		"Shell Bell": number,
+		"Sea Incense": number,
+		"Lax Incense": number,
+		"Lucky Punch": number,
+		"Metal Powder": number,
+		"Thick Club": number,
+		"Stick": number,
+		"Red Scarf": number,
+		"Blue Scarf": number,
+		"Pink Scarf": number,
+		"Green Scarf": number,
+		"Yellow Scarf": number,
 	};
 	"Key Items": {
 		Auroraticket: number,
@@ -224,52 +223,52 @@ interface IItems {
 		"Go-goggles": number,
 		"Good Rod": number,
 		"Helix Fossil": number,
-		"Mach Bike": number, // Added Mach Bike to the list
+		"Mach Bike": number,
 		"Old Rod": number,
-		"Coin Case": number, // Added Coin Case to the list
-		"Itemfinder": number, // Added Itemfinder to the list
+		"Coin Case": number,
+		"Itemfinder": number,
 		"Good Rod": number,
 		"Super Rod": number,
 		"S.S. Ticket": number,
 		"Contest Pass": number,
-		"Wailmer Pail": number, // Added Wailmer Pail to the list
-		"Devon Goods": number, // Added Devon Goods to the list
-		"Soot Sack": number, // Added Soot Sack to the list
-		"Basement Key": number, // Added Basement Key to the list
-		"Acro Bike": number, // Added Acro Bike to the list
-		"Pokéblock Case": number, // Added Pokéblock Case to the list
+		"Wailmer Pail": number,
+		"Devon Goods": number,
+		"Soot Sack": number,
+		"Basement Key": number,
+		"Acro Bike": number,
+		"Pokéblock Case": number, 
 		"Letter": number,
 		"Eon Ticket": number,
-		"Red Orb": number, // Added Red Orb to the list
-		"Blue Orb": number, // Added Blue Orb to the list
+		"Red Orb": number,
+		"Blue Orb": number,
 		"Scanner": number,
-		"Go-Goggles": number, // Added Go-Goggles to the list
+		"Go-Goggles": number,
 		"Meteorite": number,
-		"Rm. 1 Key": number, // Added Rm. 1 Key to the list
-		"Rm. 2 Key": number, // Added Rm. 2 Key to the list
-		"Rm. 4 Key": number, // Added Rm. 4 Key to the list
-		"Rm. 6 Key": number, // Added Rm. 6 Key to the list
-		"Storage Key": number, // Added Storage Key to the list
-		"Root Fossil": number, // Added Root Fossil to the list
-		"Claw Fossil": number, // Added Claw Fossil to the list
+		"Rm. 1 Key": number,
+		"Rm. 2 Key": number, 
+		"Rm. 4 Key": number,
+		"Rm. 6 Key": number, 
+		"Storage Key": number, 
+		"Root Fossil": number, 
+		"Claw Fossil": number, 
 		"Devon Scope": number,
 	};
 	PC: {
 		Potion: number;
 	};
 	"Poké Balls": {
-		"Master Ball": number, // Added Master Ball to the list
-		"Ultra Ball": number, // Added Ultra Ball to the list
+		"Master Ball": number, 
+		"Ultra Ball": number, 
 		"Great Ball": number,
 		"Poké Ball": number,
-		"Safari Ball": number, // Added Safari Ball to the list
-		"Net Ball": number, // Added Net Ball to the list
-		"Dive Ball": number, // Added Dive Ball to the list
-		"Nest Ball": number, // Added Nest Ball to the list
-		"Repeat Ball": number, // Added Repeat Ball to the list
-		"Timer Ball": number, // Added Timer Ball to the list
-		"Luxury Ball": number, // Added Luxury Ball to the list
-		"Premier Ball": number, // Added Premier Ball to the list
+		"Safari Ball": number, 
+		"Net Ball": number,
+		"Dive Ball": number,
+		"Nest Ball": number, 
+		"Repeat Ball": number,
+		"Timer Ball": number,
+		"Luxury Ball": number, 
+		"Premier Ball": number, 
 	};
 	"TMs & HMs": {
 		HM01: number,
@@ -280,56 +279,56 @@ interface IItems {
 		HM06: number,
 		HM07: number,
 		HM08: number,
-		TM01: number, // Type Number for TM01
-		TM02: number, // Type Number for TM02
+		TM01: number,
+		TM02: number, 
 		TM03: number,
-		TM04: number, // Type Number for TM04
+		TM04: number, 
 		TM05: number,
-		TM06: number, // Type Number for TM06
-		TM07: number, // Type Number for TM07
-		TM08: number, // Type Number for TM08
+		TM06: number, 
+		TM07: number, 
+		TM08: number, 
 		TM09: number,
 		TM10: number,
 		TM11: number,
-		TM12: number, // Type Number for TM12
-		TM13: number, // Type Number for TM13
-		TM14: number, // Type Number for TM14
-		TM15: number, // Type Number for TM15
-		TM16: number, // Type Number for TM16
-		TM17: number, // Type Number for TM17
-		TM18: number, // Type Number for TM18
-		TM19: number, // Type Number for TM19
-		TM20: number, // Type Number for TM20
-		TM21: number, // Type Number for TM21
-		TM22: number, // Type Number for TM22
-		TM23: number, // Type Number for TM23
-		TM24: number, // Type Number for TM24
-		TM25: number, // Type Number for TM25
-		TM26: number, // Type Number for TM26
-		TM27: number, // Type Number for TM27
+		TM12: number, 
+		TM13: number, 
+		TM14: number, 
+		TM15: number,
+		TM16: number, 
+		TM17: number, 
+		TM18: number, 
+		TM19: number, 
+		TM20: number, 
+		TM21: number, 
+		TM22: number, 
+		TM23: number, 
+		TM24: number, 
+		TM25: number, 
+		TM26: number, 
+		TM27: number, 
 		TM28: number,
-		TM29: number, // Type Number for TM29
-		TM30: number, // Type Number for TM30
+		TM29: number, 
+		TM30: number, 
 		TM31: number,
-		TM32: number, // Type Number for TM32
-		TM33: number, // Type Number for TM33
-		TM34: number, // Type Number for TM34
-		TM35: number, // Type Number for TM35
-		TM36: number, // Type Number for TM36
-		TM37: number, // Type Number for TM37
-		TM38: number, // Type Number for TM38
+		TM32: number, 
+		TM33: number, 
+		TM34: number, 
+		TM35: number, 
+		TM36: number, 
+		TM37: number, 
+		TM38: number, 
 		TM39: number,
 		TM40: number,
-		TM41: number, // Type Number for TM41
-		TM42: number, // Type Number for TM42
+		TM41: number, 
+		TM42: number,
 		TM43: number,
 		TM44: number,
 		TM45: number,
-		TM46: number, // Type Number for TM46
+		TM46: number, 
 		TM47: number,
-		TM48: number, // Type Number for TM48
-		TM49: number, // Type Number for TM49
-		TM50: number, // Type Number for TM50
+		TM48: number, 
+		TM49: number, 
+		TM50: number, 
 	};	
 }
 
