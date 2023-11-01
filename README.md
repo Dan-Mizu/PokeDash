@@ -1,21 +1,25 @@
-# This is a dashboard written in Vue for PokeBotGen-3 (libmgba) by 40Cakes. 
+# This is a WIP Dashboard written in Vue for PokeBotGen-3 (libmgba) by 40Cakes. 
 ## (https://github.com/40Cakes/pokebot-gen3)
 
 
 
 
 # Preview 
-Multiple Instances work, trainer data and party info is fetched and displayed with the help of the bot's webhooks and PokeAPI. (the design is subject to change this is WIP)
+Multiple Instances can be displayed at once, trainer data and party info is fetched and displayed with the help of the bot's webhooks and PokeAPI. (the design annd layout is subject to change this project is WIP)
 ![image](https://github.com/U2EZNeko/PokeDash/assets/20902663/b67f7331-7870-4e0b-bdde-d8aabd8d40e5)
 ![image](https://github.com/U2EZNeko/PokeDash/assets/20902663/fa6e6581-830d-41de-9fe7-d67fc1f9bca2)
 
 
 
+# Requirements:
+  - NodeJS
 
 
-
-
-
+# Install:
+  1. Git Clone the Repo
+  2. open CLI inside repo's main folder or CD to it.
+  3. run "npm install"
+  4. launch the script with "npm run dev"
 
 
 # How to configure:
