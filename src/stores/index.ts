@@ -28,17 +28,31 @@ export default defineStore(
 		// methods
 		const fetchInstanceEndpointData = async (
 			instanceID: number,
-			key: InstanceDataKey
+			key: InstanceDataKey,
+			force: boolean = false
 		) => {
 			await useFetch(
 				"http://" + instances.value[instanceID] + "/" + key
 			).then((response) => {
-				// store api response data
-				instanceData.value[instanceID][key] = response.data.value;
+				// data received
+				if (dataExists(response.data.value))
+					// store api response data
+					instanceData.value[instanceID][key] = response.data.value;
+				// error
+				else if (force) {
+					new Promise(() =>
+						setTimeout(() => {
+							fetchInstanceEndpointData(instanceID, key);
+						}, 1000)
+					);
+				}
 			});
 
 			// update pokemon sprite cache
-			if (key === "party" && instanceData.value[instanceID][key] != null)
+			if (
+				key === "party" &&
+				(instanceData.value[instanceID].party as TParty).length > 0
+			)
 				updatePokemonSpriteCache(instanceID);
 		};
 		const fetchAllInstanceEndpointData = async (
@@ -58,24 +72,18 @@ export default defineStore(
 
 			// loop through all endpoints
 			for (const key in instanceData.value[instanceID]) {
-				// keep fetching until data is retrieved
-				while (
-					!dataExists(
-						instanceData.value[instanceID][key as InstanceDataKey]
-					) &&
+				// fetch individual endpoints
+				fetchInstanceEndpointData(
+					instanceID,
+					key as InstanceDataKey,
 					force
-				)
-					// fetch individual endpoints
-					await fetchInstanceEndpointData(
-						instanceID,
-						key as InstanceDataKey
-					);
+				);
 			}
 		};
 		const updatePokemonSpriteCache = async (instanceID: number) => {
 			// loop through pokemon in party of instance
 			for (const pokemon of instanceData.value[instanceID]
-				.party as IPokemon[]) {
+				.party as TParty) {
 				// if pokemon's sprite isn't cached, then fetch and cache it
 				if (!pokemonSprites.value[pkmnRef(pokemon)])
 					await useFetch(pokeAPI + pokemon.natID).then((response) => {
