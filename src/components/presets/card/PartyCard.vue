@@ -8,20 +8,19 @@ const store = useStore();
 
 const props = defineProps<{
 	panelStyle: string;
-	partyData: IPokemon[];
+	data: IPokemon[];
 }>();
-const partyDataWithMoves = props.partyData.map(pokemon => ({
-  ...pokemon,
-  showMoves: false
-  }));
+
+// whether more info is shown per pokemon or not
+const expandedInfoVisible: Ref<boolean[]> = ref([]);
 </script>
 
 <template>
 	<div :class="panelStyle">
-		<ul class="grid grid-cols-2 gap-1">
+		<ul class="grid grid-cols-2 w-full">
 			<li
-				v-for="(pokemon, _index) of partyData"
-				class="flex flex-col my-0 mx-1 pt-0 p-0 col-span-1"
+				v-for="(pokemon, index) of data"
+				class="flex flex-col flex-grow m-1 text-light-text dark:text-dark-text"
 			>
 				<span class="flex items-center">
 					<!-- Pokemon Sprite -->
@@ -40,12 +39,10 @@ const partyDataWithMoves = props.partyData.map(pokemon => ({
 
 					<!-- Pokemon Info -->
 					<div
-						class="bg-light-primary dark:bg-dark-primary rounded-lg flex-1 justify-center py-0 px-2 items-start full:block hidden"
+						class="bg-light-primary dark:bg-dark-primary rounded-lg flex-1 justify-center py-1 px-2 items-start full:block hidden"
 					>
 						<!-- Name / Shiny -->
-						<div
-							class="text-base flex text-light-text dark:text-dark-text justify-center items-center"
-						>
+						<div class="text-base flex justify-center items-center">
 							<!-- Name -->
 							<span class="mr-1">{{
 								(pokemon as IPokemon).name
@@ -53,7 +50,7 @@ const partyDataWithMoves = props.partyData.map(pokemon => ({
 
 							<!-- Shiny -->
 							<div
-								class="bg-light-secondary dark:bg-dark-secondary m-1 px-[5px] pb-[2px] rounded-md"
+								class="bg-light-secondary dark:bg-dark-secondary rounded-md flex justify-center items-center p-1"
 								v-if="(pokemon as IPokemon).shiny"
 							>
 								<Icon
@@ -65,61 +62,115 @@ const partyDataWithMoves = props.partyData.map(pokemon => ({
 
 						<!-- Level -->
 						<div
-							class="text-base flex flex-col text-light-text dark:text-dark-text justify-center items-center mt-1 mb-1"
+							class="text-base flex flex-col justify-center items-center mt-1 mb-1"
 						>
-							<span class="text-xs"
+							<span class="text-xs mb-1"
 								>Lvl: {{ (pokemon as IPokemon).level }}</span
 							>
 							<div
-								class="w-full bg-light-secondary dark:bg-dark-secondary rounded-full h-1.5 mb-3"
+								class="w-full bg-light-secondary dark:bg-dark-secondary rounded-full h-1.5 mb-1"
 							>
 								<div
 									class="bg-light-accent dark:bg-dark-accent h-1.5 rounded-full"
 									:style="'width: ' + (pokemon as IPokemon).level + '%'"
 								></div>
 							</div>
-							<span class="text-xs"
-								>IV Sum: {{ (pokemon as IPokemon).IVSum }}</span
-							>
 						</div>
 
-						<!-- Ability / Held Item -->
+						<!-- Show More Button -->
+						<div class="w-full flex justify-center">
+							<button
+								@click="
+									expandedInfoVisible[index] =
+										!expandedInfoVisible[index]
+								"
+								class="cursor-pointer"
+							>
+								<Icon
+									v-if="expandedInfoVisible[index]"
+									name="material-symbols:arrow-circle-up-outline"
+									class="h-6 text-light-tertiary dark:text-dark-tertiary hover:text-light-accent hover:dark:text-dark-accent"
+								/>
+								<Icon
+									v-else
+									name="material-symbols:arrow-circle-down"
+									class="h-6 text-light-tertiary dark:text-dark-tertiary hover:text-light-accent hover:dark:text-dark-accent"
+								/>
+							</button>
+						</div>
+
+						<!-- Show More Content -->
 						<div
-							class="text-base flex text-light-text dark:text-dark-text items-center mb-1"
+							v-if="expandedInfoVisible[index]"
+							class="bg-light-secondary dark:bg-dark-secondary rounded-md py-1 px-2 mb-1"
 						>
-							<!-- Ability -->
-							<span>
-								<Icon
-									name="icon-park-solid:fire"
-									class="h-4 mx-1 text-light-tertiary dark:text-dark-tertiary"
-								/>
-								<span class="text-xs mr-1">
-									{{ (pokemon as IPokemon).ability }}</span
-								></span
-							>
-
-							<!-- Held Item -->
-							<span
-								v-if="(pokemon as IPokemon).item.name !='None'"
-							>
-								<Icon
-									name="mdi:sack"
-									class="h-4 mx-1 text-light-tertiary dark:text-dark-tertiary"
-								/>
-								<span class="text-xs">
-									{{ (pokemon as IPokemon).item.name }}</span
+							<!-- IV Sum -->
+							<div class="text-center w-full mb-1">
+								<span class="text-xs"
+									>IV Sum:
+									{{ (pokemon as IPokemon).IVSum }}</span
 								>
-							</span>
-						</div>
-					
-					<!-- Collapsible Moves Section -->
-						<button @click="pokemon.showMoves = !pokemon.showMoves" class="text-sm underline cursor-pointer mt-2">
-						Moves
-						</button>
-						<div v-if="pokemon.showMoves" class="mt-1 pt-1 mx-1 py-1 text-size-flex-1">
-							<ul>
-								<li v-for="move in pokemon.moves" :key="move.id" class="text-xs">
-									{{ move.name }} - Power: {{ move.power }} - PP: {{ move.pp }}
+							</div>
+
+							<div class="mb-2">
+								<!-- Ability -->
+								<span class="text-base flex items-center mb-1">
+									<Icon
+										name="icon-park-solid:fire"
+										class="h-4 text-light-tertiary dark:text-dark-tertiary"
+									/>
+									<span class="text-xs ml-1">
+										{{
+											(pokemon as IPokemon).ability
+										}}</span
+									></span
+								>
+
+								<!-- Held Item -->
+								<span
+									v-if="(pokemon as IPokemon).item.name !='None'"
+									class="text-base flex items-center"
+								>
+									<Icon
+										name="mdi:sack"
+										class="h-4 text-light-tertiary dark:text-dark-tertiary"
+									/>
+									<span class="text-xs ml-1">
+										{{
+											(pokemon as IPokemon).item.name
+										}}</span
+									>
+								</span>
+							</div>
+
+							<!-- Moves List -->
+							<ul class="mb-1">
+								<li
+									v-for="move in pokemon.moves"
+									:key="move.id"
+									class="flex items-center relative"
+								>
+									<span class="text-xs">
+										{{ move.name }}
+									</span>
+									<span
+										class="flex items-center absolute right-0"
+									>
+										<Icon
+											name="ph:hand-fist-fill"
+											class="h-3 text-light-tertiary dark:text-dark-tertiary"
+										/>
+										<span class="text-xs">
+											{{ move.power }}</span
+										>
+										<Icon
+											name="iconamoon:lightning-1-fill"
+											class="h-3 text-light-tertiary dark:text-dark-tertiary ml-1"
+										/>
+										<span class="text-xs">
+											{{ move.remaining_pp }}/{{ move.pp }}</span
+										></span
+									>
 								</li>
 							</ul>
 						</div>

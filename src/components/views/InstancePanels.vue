@@ -9,9 +9,9 @@ const panelStyleBase =
 const panelStyle = [
 	"flex-[0.5] " + panelStyleBase,
 	"full:flex-[1.5] " + panelStyleBase,
-	panelStyleBase,
-	"flex-[0.8] " + panelStyleBase,
-	"flex-[0.8] " + panelStyleBase,
+	"flex-[0.5] " + panelStyleBase,
+	"flex-[0.5] " + panelStyleBase,
+	"flex-[0.5] " + panelStyleBase,
 ];
 
 // Add Instance Modal handling
