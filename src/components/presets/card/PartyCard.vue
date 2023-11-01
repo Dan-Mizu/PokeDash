@@ -16,8 +16,18 @@ const expandedInfoVisible: Ref<boolean[]> = ref([]);
 </script>
 
 <template>
-	<div :class="panelStyle">
+	<div :class="[panelStyle, 'relative']">
+		<!-- Expand/Shrink All -->
+		<div class="flex flex-col shrink-0 h-full py-2 gap-1">
+			<!-- Expand All -->
+			<IconButton v-if="!expandedInfoVisible.every(val => val === true)" icon="i-tabler-layout-bottombar-collapse-filled" @clickEvent="expandedInfoVisible.fill(true, 0, 6)"/>
+			<!-- Shrink All -->
+			<IconButton v-if="!expandedInfoVisible.every(val => val === false)" icon="i-tabler-layout-bottombar-expand" @clickEvent="expandedInfoVisible.fill(false, 0, 6)"/>
+		</div>
+
+		<!-- List of Pokemon -->
 		<ul class="grid grid-cols-2 w-full">
+			<!-- Individual Pokemon -->
 			<li
 				v-for="(pokemon, index) of data"
 				class="flex flex-col flex-grow m-1 text-light-text dark:text-dark-text"
@@ -168,7 +178,9 @@ const expandedInfoVisible: Ref<boolean[]> = ref([]);
 											class="h-3 text-light-tertiary dark:text-dark-tertiary ml-1"
 										/>
 										<span class="text-xs">
-											{{ move.remaining_pp }}/{{ move.pp }}</span
+											{{ move.remaining_pp }}/{{
+												move.pp
+											}}</span
 										></span
 									>
 								</li>

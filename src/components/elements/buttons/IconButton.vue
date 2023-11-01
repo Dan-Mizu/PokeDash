@@ -1,7 +1,15 @@
 <script setup lang="ts">
-const props = defineProps<{
+const props = withDefaults(defineProps<{
 	icon: string;
-}>();
+	iconColor?: string;
+	backgroundColor?: string;
+	hoverColor?: string;
+}>(),
+{
+	iconColor: "text-light-text dark:text-dark-text",
+	backgroundColor: "bg-light-primary dark:bg-dark-primary",
+	hoverColor: "hover:bg-light-secondary hover:dark:bg-dark-secondary"
+});
 </script>
 
 <template>
@@ -11,7 +19,7 @@ const props = defineProps<{
 		:ui="{
 			color: {
 				primary: {
-					solid: 'text-light-text dark:text-dark-text hover:bg-light-secondary dark:hover:bg-dark-secondary focus:outline-none',
+					solid: iconColor + ' ' + backgroundColor + ' ' + hoverColor + ' focus:outline-none',
 				},
 			},
 		}"
