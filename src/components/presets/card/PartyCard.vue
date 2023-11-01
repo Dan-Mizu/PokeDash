@@ -30,7 +30,7 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 <template>
 	<div :class="[panelStyle, 'relative text-light-text dark:text-dark-text']">
 		<!-- Expand/Shrink All -->
-		<div class="full:flex full:flex-col shrink-0 h-full py-2 gap-1 hidden">
+		<div class="full:flex full:flex-col h-full py-2 gap-1 hidden">
 			<!-- Expand All -->
 			<IconButton
 				v-if="!expandedInfoVisible.every((val) => val === true)"
@@ -50,7 +50,7 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 			<!-- Individual Pokemon -->
 			<li
 				v-for="(pokemon, index) of data"
-				class="m-1 gap-1 flex flex-row p-0 mx-1 items-center justify-center"
+				class="m-1 gap-1 flex flex-row mx-1 items-center justify-center"
 			>
 				<!-- Pokemon Sprite -->
 				<div
@@ -58,7 +58,7 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 						!expandedInfoVisible[index] ||
 						viewport.isLessThan('full')
 					"
-					class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center w-full px-7 p-2"
+					class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center w-full"
 				>
 					<Spinner v-if="!store.pokemonSprites[pkmnRef(pokemon)]" />
 					<img
