@@ -58,11 +58,12 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 						!expandedInfoVisible[index] ||
 						viewport.isLessThan('full')
 					"
-					class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center w-full mx-0 p-4 m-0"
+					class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center w-full"
 				>
 					<Spinner v-if="!store.pokemonSprites[pkmnRef(pokemon)]" />
 					<img
 						v-else
+						class="w-full"
 						:src="store.pokemonSprites[pkmnRef(pokemon)]"
 						:title="(pokemon as IPokemon).name + ((pokemon as IPokemon).shiny ? ' (Shiny)' : '')"
 					/>
@@ -71,7 +72,7 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 				<!-- Pokemon Info -->
 				<div
 					:class="[
-						'bg-light-primary dark:bg-dark-primary rounded-lg full:flex full:flex-col hidden justify-start items-center py-2 px-2 w-full',
+						'bg-light-primary dark:bg-dark-primary rounded-lg full:flex full:flex-col hidden justify-start items-center py-2 px-2 w-full h-full',
 						expandedInfoVisible[index] ? 'h-full' : '',
 					]"
 				>
