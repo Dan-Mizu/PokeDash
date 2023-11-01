@@ -1,0 +1,22 @@
+{
+	"recommendations": [
+        "christian-kohler.path-intellisense",
+        "formulahendry.auto-rename-tag",
+        "esbenp.prettier-vscode",
+        "vue.volar",
+        "vue.vscode-typescript-vue-plugin",
+        "aaron-bond.better-comments",
+        "streetsidesoftware.code-spell-checker",
+        "vunguyentuan.vscode-css-variables",
+        "mikestead.dotenv",
+        "antfu.iconify",
+        "kisstkondoros.vscode-gutter-preview",
+        "wix.vscode-import-cost",
+        "oderwat.indent-rainbow",
+        "csstools.postcss",
+        "bradlc.vscode-tailwindcss",
+        "gruntfuggly.todo-tree",
+        "pflannery.vscode-versionlens",
+        "antiantisepticeye.vscode-color-picker"
+    ]
+}
