@@ -31,9 +31,9 @@ Multiple Instances can be displayed at once, trainer data and party info is fetc
 
 ## You can add default instances server-side by writing them into a .env like this:
 
-### DEFAULT_INSTANCE_API_URLS="your.IP.goes.here:port1, your.IP.goes.here:port2"
+#### DEFAULT_INSTANCE_API_URLS="your.IP.goes.here:port1, your.IP.goes.here:port2"
 it should look like this: 
-### DEFAULT_INSTANCE_API_URLS="127.0.0.1:8888, 127.0.0.1:8889"
+#### DEFAULT_INSTANCE_API_URLS="127.0.0.1:8888, 127.0.0.1:8889"
 
 
 ## To Do
