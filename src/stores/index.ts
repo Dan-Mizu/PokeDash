@@ -49,7 +49,10 @@ export default defineStore(
 			});
 
 			// update pokemon sprite cache
-			if (key === "party" && instanceData.value[instanceID][key] != null)
+			if (
+				key === "party" &&
+				(instanceData.value[instanceID].party as IPokemon[]).length > 0
+			)
 				updatePokemonSpriteCache(instanceID);
 		};
 		const fetchAllInstanceEndpointData = async (
