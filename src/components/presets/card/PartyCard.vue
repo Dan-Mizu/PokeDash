@@ -13,7 +13,7 @@ const viewport = useViewport();
 
 const props = defineProps<{
 	panelStyle: string;
-	data: IPokemon[];
+	data: TParty;
 }>();
 
 // whether more info is shown per pokemon or not
