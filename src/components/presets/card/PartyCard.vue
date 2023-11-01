@@ -58,7 +58,7 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 						!expandedInfoVisible[index] ||
 						viewport.isLessThan('full')
 					"
-					class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center w-full"
+					class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center w-full px-7 p-2"
 				>
 					<Spinner v-if="!store.pokemonSprites[pkmnRef(pokemon)]" />
 					<img
