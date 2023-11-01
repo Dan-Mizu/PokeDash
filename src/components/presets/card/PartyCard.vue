@@ -2,8 +2,6 @@
 // utility functions
 import { pkmnRef } from "~/utility";
 
-import { useNuxtApp } from "#app";
-
 // get state
 import useStore from "~/stores";
 const store = useStore();
@@ -65,7 +63,9 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 						v-else
 						class="w-full"
 						:src="store.pokemonSprites[pkmnRef(pokemon)]"
-						:title="(pokemon as IPokemon).name + ((pokemon as IPokemon).shiny ? ' (Shiny)' : '')"
+						:title="
+							pokemon.name + (pokemon.shiny ? ' (Shiny)' : '')
+						"
 					/>
 				</div>
 
@@ -81,14 +81,12 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 						class="text-base flex justify-center items-center text-center content-center"
 					>
 						<!-- Name -->
-						<span class="mr-1">{{
-							(pokemon as IPokemon).name
-						}}</span>
+						<span class="mr-1">{{ pokemon.name }}</span>
 
 						<!-- Shiny -->
 						<div
 							class="bg-light-secondary dark:bg-dark-secondary rounded-md flex justify-center items-center p-1"
-							v-if="(pokemon as IPokemon).shiny"
+							v-if="pokemon.shiny"
 						>
 							<Icon
 								name="heroicons:sparkles-solid"
@@ -102,23 +100,21 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 						class="text-base flex flex-col items-center mt-1 w-full"
 					>
 						<span class="text-xs mb-1"
-							>Lvl: {{ (pokemon as IPokemon).level }}</span
+							>Lvl: {{ pokemon.level }}</span
 						>
 						<div
 							class="bg-light-secondary dark:bg-dark-secondary rounded-full w-full h-1.5 mb-1"
 						>
 							<div
 								class="bg-light-accent dark:bg-dark-accent rounded-full h-1.5"
-								:style="'width: ' + (pokemon as IPokemon).level + '%'"
+								:style="'width: ' + pokemon.level + '%'"
 							></div>
 						</div>
 					</div>
 
 					<!-- IV Sum -->
 					<div class="text-center mb-1">
-						<span class="text-xs"
-							>IV Sum: {{ (pokemon as IPokemon).IVSum }}</span
-						>
+						<span class="text-xs">IV Sum: {{ pokemon.IVSum }}</span>
 					</div>
 
 					<!-- Show More Button -->
@@ -154,13 +150,13 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 									class="h-4 text-light-tertiary dark:text-dark-tertiary"
 								/>
 								<span class="text-xs ml-1">
-									{{ (pokemon as IPokemon).ability }}</span
+									{{ pokemon.ability }}</span
 								></span
 							>
 
 							<!-- Held Item -->
 							<span
-								v-if="(pokemon as IPokemon).item.name !='None'"
+								v-if="pokemon.item.name != 'None'"
 								class="text-base flex items-center"
 							>
 								<Icon
@@ -168,7 +164,7 @@ const expandedInfoVisible: Ref<boolean[]> = ref([
 									class="h-4 text-light-tertiary dark:text-dark-tertiary"
 								/>
 								<span class="text-xs ml-1">
-									{{ (pokemon as IPokemon).item.name }}</span
+									{{ pokemon.item.name }}</span
 								>
 							</span>
 						</div>

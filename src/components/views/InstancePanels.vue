@@ -8,8 +8,7 @@ const panelStyleBase =
 	"bg-light-secondary dark:bg-dark-secondary px-2 py-1 mx-2 rounded-md flex flex-1 items-center justify-center";
 const panelStyle = [
 	"flex-[0.5] " + panelStyleBase,
-	"full:flex-[1.5] " + panelStyleBase,
-	"flex-[0.5] " + panelStyleBase,
+	"full:flex-[1] " + panelStyleBase,
 	"flex-[0.5] " + panelStyleBase,
 	"flex-[0.5] " + panelStyleBase,
 ];
@@ -45,16 +44,11 @@ const modalAddInstanceOpen = ref(false);
 
 				<!-- Encounter Info -->
 				<div :class="['truncate text-clip', panelStyle[2]]">
-					<h1>Encounter Info</h1>
-				</div>
-
-				<!-- Encounter Log -->
-				<div :class="['truncate text-clip', panelStyle[3]]">
-					<h1>Encounter Log</h1>
+					<h1>Encounters</h1>
 				</div>
 
 				<!-- Stats -->
-				<div :class="['truncate text-clip', panelStyle[4]]">
+				<div :class="['truncate text-clip', panelStyle[3]]">
 					<h1>Stats</h1>
 				</div>
 			</li>
