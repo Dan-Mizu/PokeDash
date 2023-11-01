@@ -1,130 +1,64 @@
 <script setup lang="ts">
-// utility functions
-import { pkmnRef } from "~/utility";
-
-// get state
-import useStore from "~/stores";
-const store = useStore();
+import PokemonBadge from "../badge/PokemonBadge.vue";
 
 const props = defineProps<{
 	panelStyle: string;
-	partyData: IPokemon[];
+	data: TParty;
 }>();
-const partyDataWithMoves = props.partyData.map(pokemon => ({
-  ...pokemon,
-  showMoves: false
-  }));
+
+// references to child pokemon badges
+const pokemonBadgeRefs = ref([]);
 </script>
 
 <template>
-	<div :class="panelStyle">
-		<ul class="grid grid-cols-2 gap-1">
+	<div :class="[panelStyle, 'relative text-light-text dark:text-dark-text']">
+		<!-- Expand/Shrink All -->
+		<div class="full:flex full:flex-col h-full py-2 gap-1 hidden">
+			<!-- Expand All -->
+			<IconButton
+				v-if="
+					!pokemonBadgeRefs.every(
+						(badge) => (badge as typeof PokemonBadge).showExtraInfo === true
+					)
+				"
+				icon="i-tabler-layout-bottombar-collapse-filled"
+				@clickEvent="
+					pokemonBadgeRefs.forEach(
+						(badge) =>
+							((
+								badge as typeof PokemonBadge
+							).showExtraInfo = true)
+					)
+				"
+			/>
+			<!-- Shrink All -->
+			<IconButton
+				v-if="
+					!pokemonBadgeRefs.every(
+						(badge) => (badge as typeof PokemonBadge).showExtraInfo === false
+					)
+				"
+				icon="i-tabler-layout-bottombar-expand"
+				@clickEvent="
+					pokemonBadgeRefs.forEach(
+						(badge) =>
+							((
+								badge as typeof PokemonBadge
+							).showExtraInfo = false)
+					)
+				"
+			/>
+		</div>
+
+		<!-- List of Pokemon -->
+		<ul class="grid grid-cols-2 w-full">
+			<!-- Individual Pokemon -->
 			<li
-				v-for="(pokemon, _index) of partyData"
-				class="flex flex-col my-0 mx-1 pt-0 p-0 col-span-1"
+				v-for="(pokemon, index) of data"
+				class="m-1 gap-1 flex flex-row mx-1 items-center justify-center"
 			>
-				<span class="flex items-center">
-					<!-- Pokemon Sprite -->
-					<div
-						class="bg-light-primary dark:bg-dark-primary rounded-lg mx-1 p-4 flex justify-center items-center min-w-[25%]"
-					>
-						<Spinner
-							v-if="!store.pokemonSprites[pkmnRef(pokemon)]"
-						/>
-						<img
-							v-else
-							:src="store.pokemonSprites[pkmnRef(pokemon)]"
-							:title="(pokemon as IPokemon).name + ((pokemon as IPokemon).shiny ? ' (Shiny)' : '')"
-						/>
-					</div>
-
-					<!-- Pokemon Info -->
-					<div
-						class="bg-light-primary dark:bg-dark-primary rounded-lg flex-1 justify-center py-0 px-2 items-start full:block hidden"
-					>
-						<!-- Name / Shiny -->
-						<div
-							class="text-base flex text-light-text dark:text-dark-text justify-center items-center"
-						>
-							<!-- Name -->
-							<span class="mr-1">{{
-								(pokemon as IPokemon).name
-							}}</span>
-
-							<!-- Shiny -->
-							<div
-								class="bg-light-secondary dark:bg-dark-secondary m-1 px-[5px] pb-[2px] rounded-md"
-								v-if="(pokemon as IPokemon).shiny"
-							>
-								<Icon
-									name="heroicons:sparkles-solid"
-									class="h-4 text-light-tertiary dark:text-dark-tertiary"
-								/>
-							</div>
-						</div>
-
-						<!-- Level -->
-						<div
-							class="text-base flex flex-col text-light-text dark:text-dark-text justify-center items-center mt-1 mb-1"
-						>
-							<span class="text-xs"
-								>Lvl: {{ (pokemon as IPokemon).level }}</span
-							>
-							<div
-								class="w-full bg-light-secondary dark:bg-dark-secondary rounded-full h-1.5 mb-3"
-							>
-								<div
-									class="bg-light-accent dark:bg-dark-accent h-1.5 rounded-full"
-									:style="'width: ' + (pokemon as IPokemon).level + '%'"
-								></div>
-							</div>
-							<span class="text-xs"
-								>IV Sum: {{ (pokemon as IPokemon).IVSum }}</span
-							>
-						</div>
-
-						<!-- Ability / Held Item -->
-						<div
-							class="text-base flex text-light-text dark:text-dark-text items-center mb-1"
-						>
-							<!-- Ability -->
-							<span>
-								<Icon
-									name="icon-park-solid:fire"
-									class="h-4 mx-1 text-light-tertiary dark:text-dark-tertiary"
-								/>
-								<span class="text-xs mr-1">
-									{{ (pokemon as IPokemon).ability }}</span
-								></span
-							>
-
-							<!-- Held Item -->
-							<span
-								v-if="(pokemon as IPokemon).item.name !='None'"
-							>
-								<Icon
-									name="mdi:sack"
-									class="h-4 mx-1 text-light-tertiary dark:text-dark-tertiary"
-								/>
-								<span class="text-xs">
-									{{ (pokemon as IPokemon).item.name }}</span
-								>
-							</span>
-						</div>
-					
-					<!-- Collapsible Moves Section -->
-						<button @click="pokemon.showMoves = !pokemon.showMoves" class="text-sm underline cursor-pointer mt-2">
-						Moves
-						</button>
-						<div v-if="pokemon.showMoves" class="mt-1 pt-1 mx-1 py-1 text-size-flex-1">
-							<ul>
-								<li v-for="move in pokemon.moves" :key="move.id" class="text-xs">
-									{{ move.name }} - Power: {{ move.power }} - PP: {{ move.pp }}
-								</li>
-							</ul>
-						</div>
-					</div>
-				</span>
+				<!-- Pokemon Sprite -->
+				<PokemonBadge :data="pokemon" ref="pokemonBadgeRefs" />
 			</li>
 		</ul>
 	</div>

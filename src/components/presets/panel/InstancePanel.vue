@@ -19,29 +19,11 @@ const props = defineProps<{
 		:panel-style="panelStyle[0]"
 		v-if="!dataExists(store.instanceData[instanceID].trainer)"
 	/>
-	<div v-else :class="panelStyle[0]">
-		<div class="flex justify-center items-center">
-			<p class="text-sm text-bold">
-				Name: {{ (store.instanceData[instanceID].trainer as ITrainer).name }}
-				<div>
-				<div>
-				Gender: {{ (store.instanceData[instanceID].trainer as ITrainer).gender }}
-				</div>
-				TID: {{ (store.instanceData[instanceID].trainer as ITrainer).tid }}
-				</div>
-				SID: {{ (store.instanceData[instanceID].trainer as ITrainer).sid }}
-				<div>
-				Current Map: {{ (store.instanceData[instanceID].trainer as ITrainer).map_name }}
-				</div>
-				<div>
-				Current coords: {{ (store.instanceData[instanceID].trainer as ITrainer).coords }}
-				</div>
-				<div>
-				On Bike: {{ (store.instanceData[instanceID].trainer as ITrainer).on_bike }}
-				</div>
-			</p>
-		</div>
-	</div>
+	<TrainerCard
+		v-else
+		:panel-style="panelStyle[0]"
+		:data="store.instanceData[instanceID].trainer"
+	/>
 
 	<!-- Team Info -->
 	<LoadingCard
@@ -51,27 +33,28 @@ const props = defineProps<{
 	<PartyCard
 		v-else
 		:panel-style="panelStyle[1]"
-		:party-data="(store.instanceData[instanceID].party as IPokemon[])"
+		:data="store.instanceData[instanceID].party"
 	/>
 
 	<!-- Encounter Info -->
 	<LoadingCard
 		:panel-style="panelStyle[2]"
-		v-if="!dataExists(store.instanceData[instanceID].encounter_rate)"
-	/>
-	<div v-else :class="panelStyle[2]"></div>
-
-	<!-- Encounter Log -->
-	<LoadingCard
-		:panel-style="panelStyle[3]"
 		v-if="!dataExists(store.instanceData[instanceID].encounter_log)"
 	/>
-	<div v-else :class="panelStyle[3]"></div>
+	<EncountersCard
+		v-else
+		:panel-style="panelStyle[2]"
+		:data="store.instanceData[instanceID].encounter_log"
+	/>
 
 	<!-- Stats -->
 	<LoadingCard
-		:panel-style="panelStyle[4]"
+		:panel-style="panelStyle[3]"
 		v-if="!dataExists(store.instanceData[instanceID].stats)"
 	/>
-	<div v-else :class="panelStyle[4]"></div>
+	<StatsCard
+		v-else
+		:panel-style="panelStyle[3]"
+		:data="store.instanceData[instanceID].stats"
+	/>
 </template>
