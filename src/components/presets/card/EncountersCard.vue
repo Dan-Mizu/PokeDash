@@ -59,10 +59,6 @@ useInfiniteScroll(
 
 // encounter type
 const encounterType = ref(0);
-
-onMounted(() => {
-	console.log(props.shinyLogData);
-});
 </script>
 
 <template>
