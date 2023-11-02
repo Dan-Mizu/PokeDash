@@ -82,19 +82,17 @@ store
 			<!-- Level -->
 			<div class="text-base flex flex-col items-center mt-1 w-full">
 				<span class="text-xs mb-1">Lvl: {{ data.level }}</span>
-				<div
-					class="bg-light-secondary dark:bg-dark-secondary rounded-full w-full h-1.5 mb-1"
-				>
-					<div
-						class="bg-light-accent dark:bg-dark-accent rounded-full h-1.5"
-						:style="'width: ' + data.level + '%'"
-					></div>
-				</div>
 			</div>
 
 			<!-- IV Sum -->
-			<div class="text-center mb-1">
+			<div class="text-center mb-0">
 				<span class="text-xs">IV Sum: {{ data.IVSum }}</span>
+				<div class="bg-light-accent dark:bg-dark-accent rounded-full justify-center items-center h-2 ">
+					<div
+						class="bg-light-secondary dark:bg-dark-secondary h-2"
+						:style="'width: '+ (((186 - data.IVSum) / 186)*100) + '%'"
+					></div>
+				</div>
 			</div>
 
 			<!-- Show More Button -->
