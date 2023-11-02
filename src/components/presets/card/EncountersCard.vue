@@ -74,7 +74,7 @@ const encounterType = ref(0);
 				<span class="text-sm text-center">Latest Encounters</span>
 				<UTabs
 					class="justify-end"
-					@change="(index: number) => encounterType = index "
+					@change="(index: number) => encounterType = index"
 					:items="[{ label: 'Wild' }, { label: 'Shiny' }]"
 					:default-index="encounterType"
 					:ui="{
