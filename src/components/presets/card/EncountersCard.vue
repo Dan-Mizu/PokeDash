@@ -65,7 +65,7 @@ const encounterType = ref(0);
 	<div :class="panelStyle">
 		<div class="flex flex-col h-[44vh] w-full self-start">
 			<!-- Encounter Stats -->
-			<!-- <div class="flex flex-1 flex-grow w-full"></div> -->
+			<div class="flex flex-1 flex-grow w-full"></div>
 
 			<!-- Encountered Pokemon Title/Options -->
 			<div
