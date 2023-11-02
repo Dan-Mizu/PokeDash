@@ -67,9 +67,9 @@ onMounted(() => {
 
 <template>
 	<div :class="panelStyle">
-		<div class="flex flex-col h-[44vh] w-full self-end">
+		<div class="flex flex-col h-[44vh] w-full self-start">
 			<!-- Encounter Stats -->
-			<div class="flex flex-1 flex-grow w-full"></div>
+			<!-- <div class="flex flex-1 flex-grow w-full"></div> -->
 
 			<!-- Encountered Pokemon Title/Options -->
 			<div
@@ -101,7 +101,7 @@ onMounted(() => {
 
 			<!-- Encountered Wild Pokemon List -->
 			<div
-				class="flex flex-[0.8] flex-grow min-h-0 w-full justify-center"
+				class="flex flex-grow min-h-0 w-full justify-center"
 			>
 				<ul
 					v-if="encounterType === 0"
