@@ -51,7 +51,7 @@ const pokemonBadgeRefs = ref([]);
 		</div>
 
 		<!-- List of Pokemon -->
-		<ul class="grid grid-cols-2 w-full py-30 px-0 pt-0 gap-0 p-0">
+		<ul class="grid grid-cols-2 w-full">
 			<!-- Individual Pokemon -->
 			<li
 				v-for="(pokemon, index) of data"
