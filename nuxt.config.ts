@@ -63,6 +63,7 @@ export default defineNuxtConfig({
 		},
 	],
 	modules: [
+		"@vueuse/nuxt",
 		"@nuxt/ui", // includes @nuxtjs/tailwindcss and @nuxtjs/color-mode
 		"nuxt-icon",
 		"@pinia/nuxt",

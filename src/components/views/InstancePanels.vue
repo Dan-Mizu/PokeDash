@@ -7,7 +7,7 @@ const store = useStore();
 const panelStyleBase =
 	"bg-light-secondary dark:bg-dark-secondary px-2 py-1 mx-2 rounded-md flex flex-1 items-center justify-center";
 const panelStyle = [
-	"flex-[0.5] " + panelStyleBase,
+	"flex-[0.3] " + panelStyleBase,
 	"full:flex-[1] " + panelStyleBase,
 	"flex-[0.5] " + panelStyleBase,
 	"flex-[0.5] " + panelStyleBase,
@@ -30,26 +30,26 @@ const modalAddInstanceOpen = ref(false);
 
 	<!-- Content -->
 	<div class="mt-5 w-[90%] flex justify-center">
-		<ul class="overflow-auto my-3 w-screen scrollbar-hidden">
+		<ul class="overflow-auto my-3 w-full scrollbar-hidden">
 			<li class="flex justify-center mb-3">
 				<!-- Trainer Info -->
 				<div :class="['truncate text-clip', panelStyle[0]]">
-					<h1>Trainer</h1>
+					<h1 class="font-bold">Trainer</h1>
 				</div>
 
 				<!-- Team Info -->
 				<div :class="['truncate text-clip', panelStyle[1]]">
-					<h1>Team</h1>
+					<h1 class="font-bold">Team</h1>
 				</div>
 
 				<!-- Encounter Info -->
 				<div :class="['truncate text-clip', panelStyle[2]]">
-					<h1>Encounters</h1>
+					<h1 class="font-bold">Encounters</h1>
 				</div>
 
 				<!-- Stats -->
 				<div :class="['truncate text-clip', panelStyle[3]]">
-					<h1>Stats</h1>
+					<h1 class="font-bold">Stats</h1>
 				</div>
 			</li>
 			<li

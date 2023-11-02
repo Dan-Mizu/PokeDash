@@ -11,7 +11,7 @@ const pokemonBadgeRefs = ref([]);
 </script>
 
 <template>
-	<div :class="[panelStyle, 'relative text-light-text dark:text-dark-text']">
+	<div :class="[panelStyle, 'relative']">
 		<!-- Expand/Shrink All -->
 		<div class="full:flex full:flex-col h-full py-2 gap-1 hidden">
 			<!-- Expand All -->
@@ -55,7 +55,7 @@ const pokemonBadgeRefs = ref([]);
 			<!-- Individual Pokemon -->
 			<li
 				v-for="(pokemon, index) of data"
-				class="m-1 gap-1 flex flex-row mx-1 items-center justify-center"
+				class="m-1 items-center justify-center"
 			>
 				<!-- Pokemon Sprite -->
 				<PokemonBadge :data="pokemon" ref="pokemonBadgeRefs" />

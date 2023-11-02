@@ -60,7 +60,7 @@ defineExpose({
 			color: {
 				white: {
 					outline:
-						'shadow-sm bg-light-secondary dark:bg-dark-secondary text-light-text dark:text-dark-text ring-0 focus:ring-0',
+						'shadow-sm bg-light-secondary dark:bg-dark-secondary ring-0 focus:ring-0',
 				},
 			},
 			placeholder:

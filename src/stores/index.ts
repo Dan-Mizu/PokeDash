@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 // utility functions
-import { dataExists, pkmnRef } from "~/utility";
+import { dataExists, pkmnRefRaw } from "~/utility";
 
 // default state values
 import defaults from "./defaults";
@@ -31,29 +31,58 @@ export default defineStore(
 			key: InstanceDataKey,
 			force: boolean = false
 		) => {
-			await useFetch(
-				"http://" + instances.value[instanceID] + "/" + key
-			).then((response) => {
-				// data received
-				if (dataExists(response.data.value))
-					// store api response data
-					instanceData.value[instanceID][key] = response.data.value;
-				// error
-				else if (force) {
-					new Promise(() =>
-						setTimeout(() => {
-							fetchInstanceEndpointData(instanceID, key);
-						}, 1000)
-					);
+			useFetch("http://" + instances.value[instanceID] + "/" + key).then(
+				(response) => {
+					// data received
+					if (dataExists(response.data.value))
+						// store api response data
+						(instanceData.value[instanceID][key] as any) =
+							response.data.value;
+					// error
+					else if (force) {
+						new Promise(() =>
+							setTimeout(() => {
+								fetchInstanceEndpointData(instanceID, key);
+							}, 1000)
+						);
+					}
 				}
-			});
+			);
 
-			// update pokemon sprite cache
-			if (
-				key === "party" &&
-				(instanceData.value[instanceID].party as TParty).length > 0
-			)
-				updatePokemonSpriteCache(instanceID);
+			// // update pokemon sprite cache from party data
+			// if (
+			// 	key === "party" &&
+			// 	instanceData.value[instanceID].party.length > 0
+			// )
+			// 	// loop through pokemon in party of instance
+			// 	for (const pokemon of instanceData.value[instanceID].party) {
+			// 		// fetch this pokemon's sprite if not already cached
+			// 		updatePokemonSpriteCache(pokemon);
+			// 	}
+
+			// // update pokemon sprite cache from encounter log data
+			// if (
+			// 	key === "encounter_log" &&
+			// 	instanceData.value[instanceID].encounter_log.length > 0
+			// )
+			// 	// loop through encountered pokemon in encounter log of instance
+			// 	for (const encounteredPokemon of instanceData.value[instanceID]
+			// 		.encounter_log) {
+			// 		// fetch this pokemon's sprite if not already cached
+			// 		updatePokemonSpriteCache(encounteredPokemon.pokemon);
+			// 	}
+
+			// // update pokemon sprite cache from shiny log data
+			// if (
+			// 	key === "shiny_log" &&
+			// 	instanceData.value[instanceID].shiny_log.length > 0
+			// )
+			// 	// loop through encountered pokemon in encounter log of instance
+			// 	for (const encounteredPokemon of instanceData.value[instanceID]
+			// 		.shiny_log) {
+			// 		// fetch this pokemon's sprite if not already cached
+			// 		updatePokemonSpriteCache(encounteredPokemon.pokemon);
+			// 	}
 		};
 		const fetchAllInstanceEndpointData = async (
 			instanceID: number,
@@ -68,7 +97,7 @@ export default defineStore(
 				shiny_log: {},
 				encounter_rate: {},
 				stats: {},
-			};
+			} as any;
 
 			// loop through all endpoints
 			for (const key in instanceData.value[instanceID]) {
@@ -80,18 +109,21 @@ export default defineStore(
 				);
 			}
 		};
-		const updatePokemonSpriteCache = async (instanceID: number) => {
-			// loop through pokemon in party of instance
-			for (const pokemon of instanceData.value[instanceID]
-				.party as TParty) {
-				// if pokemon's sprite isn't cached, then fetch and cache it
-				if (!pokemonSprites.value[pkmnRef(pokemon)])
-					await useFetch(pokeAPI + pokemon.natID).then((response) => {
-						pokemonSprites.value[pkmnRef(pokemon)] = pokemon.shiny
-							? (response.data.value as any).sprites.front_shiny
-							: (response.data.value as any).sprites
-									.front_default;
-					});
+
+		// caching pokemon sprites from PokeAPI
+		const getPokemonSprite = async (natID: number, isShiny: boolean) => {
+			// cached sprite not found- fetch, cache, and return it
+			if (!pokemonSprites.value[pkmnRefRaw(natID, isShiny)]) {
+				return useFetch(pokeAPI + natID).then((response) => {
+					pokemonSprites.value[pkmnRefRaw(natID, isShiny)] = isShiny
+						? (response.data.value as any).sprites.front_shiny
+						: (response.data.value as any).sprites.front_default;
+					return pokemonSprites.value[pkmnRefRaw(natID, isShiny)];
+				});
+			}
+			// cached sprite found- return it
+			else {
+				return pokemonSprites.value[pkmnRefRaw(natID, isShiny)];
 			}
 		};
 
@@ -102,6 +134,7 @@ export default defineStore(
 			pokemonSprites,
 			fetchInstanceEndpointData,
 			fetchAllInstanceEndpointData,
+			getPokemonSprite,
 		};
 	},
 	{

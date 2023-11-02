@@ -12,7 +12,7 @@
 }
 
 body {
-	@apply bg-light-primary dark:bg-dark-primary;
+	@apply bg-light-primary dark:bg-dark-primary text-light-text dark:text-dark-text;
 }
 
 /* hidden scrollbar */

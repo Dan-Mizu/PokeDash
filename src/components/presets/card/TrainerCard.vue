@@ -8,9 +8,7 @@ const props = defineProps<{
 
 <template>
 	<div :class="panelStyle">
-		<div
-			class="flex flex-col w-full p-3 text-light-text dark:text-dark-text"
-		>
+		<div class="flex flex-col w-full p-3">
 			<!-- Character Data -->
 			<div class="flex flex-row justify-center mb-2">
 				<!-- Name -->
