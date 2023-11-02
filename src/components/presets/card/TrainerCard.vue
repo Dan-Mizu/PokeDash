@@ -11,6 +11,7 @@ const props = defineProps<{
 		<div class="flex flex-col w-full p-3">
 			<!-- Character Data -->
 			<div class="flex flex-row justify-center mb-2">
+				<!-- Text box to let user "name" an instance here, just display -->
 				<!-- Name -->
 				<span class="mr-2 text-lg font-bold flex items-center">
 					{{ data.name }}
@@ -67,6 +68,7 @@ const props = defineProps<{
 					(X: {{ data.coords[0] }}, Y: {{ data.coords[1] }})
 				</span>
 			</div>
+			<!-- Target Mon?-->
 		</div>
 	</div>
 </template>
