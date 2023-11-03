@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 // utility functions
-import { dataExists, pkmnRefRaw } from "~/utility";
+import { pkmnRefRaw } from "~/utility";
 
 // default state values
 import defaults from "./defaults";
@@ -28,58 +28,38 @@ export default defineStore(
 		// methods
 		const fetchInstanceEndpointData = async (
 			apiURL: string,
-			key: InstanceDataKey,
-			force: boolean = false
-		) => {
-			// return useFetch("http://" + apiURL + "/" + key).then((response) => {
-			// 	// data received
-			// 	if (dataExists(response.data.value)) {
-			// 		console.log("fetched successfully", response.data.value);
-			// 		return response.data.value as InstanceData;
-			// 	}
-			// 	// error- try again
-			// 	else if (force) {
-			// 		console.log("forcing...");
-			// 		setTimeout(() => {
-			// 			return fetchInstanceEndpointData(apiURL, key);
-			// 		}, 1000);
-			// 	}
-			// 	// error- return null
-			// 	else {
-			// 		// failed to fetch and won't force
-			// 		console.log("not forcing...");
-			// 		return null;
-			// 	}
-			// });
-			// return await useFetch("/" + key, {
-			// 	method: "GET",
-			// 	baseURL: "http://" + apiURL,
-			// 	onResponse: ({ request, response, options }) => {
-			// 		console.log(response);
-			// 	},
-			// 	onResponseError: ({ request, response, options }) => {
-			// 		console.log(response);
-			// 	},
-			// });
+			key: InstanceDataKey
+		): Promise<InstanceData | null> => {
+			// fetch provided endpoint from provided api
 			return await useFetch("http://" + apiURL + "/" + key).then(
-				(res) => {
-					const data = res.data.value;
-					const error = res.error.value;
-					if (error) {
-						console.log(error);
-					} else {
-						console.log("successful", data, res)
+				(response) => {
+					// error
+					if (response.error.value) {
+						// notification
+						console.log("API FETCH ERROR:", response.error.value, response);
+
+						// send null
+						return null;
+					}
+
+					// success
+					else {
+						// send data
+						return response.data.value as InstanceData;
 					}
 				},
-				(error) => {
-					console.log("exception...");
-					console.log(error);
+				// exception
+				(exception) => {
+					// notification
+					console.log("API FETCH EXCEPTION:", exception);
+
+					// send null
+					return null;
 				}
 			);
 		};
 		const fetchAllInstanceEndpointData = async (
-			apiURL: string,
-			force: boolean = false
+			apiURL: string
 		): Promise<IInstanceData> => {
 			let newInstanceData = {
 				trainer: {},
@@ -93,20 +73,12 @@ export default defineStore(
 
 			// loop through all endpoints
 			for (const key in newInstanceData) {
-				// fetch individual endpoints
-				// fetchInstanceEndpointData(
-				// 	apiURL,
-				// 	key as InstanceDataKey,
-				// 	force
-				// ).then(
-				// 	(response: InstanceData | undefined | null) =>
-				// 		(newInstanceData[key] = response)
-				// );
 				await fetchInstanceEndpointData(
 					apiURL,
-					key as InstanceDataKey,
-					force
-				);
+					key as InstanceDataKey
+				).then((response) => {
+					newInstanceData[key] = response;
+				});
 			}
 
 			// send new instance data

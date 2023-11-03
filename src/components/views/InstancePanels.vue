@@ -2,8 +2,8 @@
 // props
 const props = withDefaults(
 	defineProps<{
-		instances: Ref<string[]> | Ref<string>;
-		instanceData: Ref<IInstanceData[]> | Ref<IInstanceData>;
+		instances: string[] | string;
+		instanceData: IInstanceData[] | IInstanceData;
 		allowInstanceManipulation?: boolean;
 	}>(),
 	{ allowInstanceManipulation: true }
@@ -73,13 +73,13 @@ const modalAddInstanceOpen = ref(false);
 
 			<!-- Multiple Instances -->
 			<li
-				v-if="props.instances.value instanceof Array"
-				v-for="(_apiURL, index) in props.instances.value"
+				v-if="props.instances instanceof Array"
+				v-for="(_apiURL, index) in props.instances"
 				class="flex justify-center mb-3"
 			>
 				<InstancePanel
 					:panelStyle="panelStyle"
-					:instanceData="(props.instanceData as Ref<IInstanceData[]>).value[index]"
+					:instanceData="(props.instanceData as IInstanceData[])[index]"
 				/>
 			</li>
 
@@ -87,7 +87,7 @@ const modalAddInstanceOpen = ref(false);
 			<li v-else class="flex justify-center mb-3">
 				<InstancePanel
 					:panelStyle="panelStyle"
-					:instanceData="(props.instanceData as Ref<IInstanceData>).value"
+					:instanceData="(props.instanceData as IInstanceData)"
 				/>
 			</li>
 		</ul>
