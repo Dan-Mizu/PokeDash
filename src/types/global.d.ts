@@ -454,6 +454,34 @@ type TEncounterRate = number;
 /** Shiny Log Data */
 type TShinyLog = IShinyPokemon[];
 
+/** FPS Log Data      TODO: Ask Dan if an Array fits for /fps lol */
+type Tfps = IFps[];
+
+/** Emulator Data */
+interface IEmuData {
+	audio_enabled: boolean;
+	bot_mode: string;
+	current_fps: number;
+	current_message: string;
+	current_time_spent_in_bot_fraction: number;
+	emulation_speed: number;
+	frame_count: number;
+	video_enabled: boolean;
+	game: {
+		[key: string]: {
+			language: string;
+			name: string;
+			revision: number;
+			title: string;
+		};
+	};
+	profile: {
+		[key: string]: {
+			name: string;
+		};
+	};
+}
+
 /** Shiny Pokemon Data */
 interface IShinyPokemon {
 	pokemon: IPokemon;
