@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// vue
 import type { ShallowRef } from "vue";
 
 // views
@@ -15,18 +16,34 @@ const activeView: ShallowRef<Component> = shallowRef(Loading);
 onMounted(async () => {
 	// no longer loading
 	activeView.value = InstancePanels;
+});
 
-	// update instance data for all stored instances
-	store.instances.forEach(async (_data, index) => {
-		// update instance data (force to keep fetching if no response)
-		store.fetchAllInstanceEndpointData(index, true);
-	});
+// update instance data for all stored instances
+store.instances.forEach(async (_data, index) => {
+	// fetch all endpoints from each instance's api
+	await store
+		.fetchAllInstanceEndpointData(store.instances[index])
+		.then((response: IInstanceData) => {
+			// save response for this endpoint on this instance
+			store.instanceData[index] = response;
+		});
+});
+
+// determine props needed for active view
+const activeProps = computed(() => {
+	if (activeView.value == InstancePanels) {
+		return {
+			instances: store.instances,
+			instanceData: store.instanceData,
+			allowInstanceManipulation: false,
+		};
+	}
 });
 </script>
 
 <template>
 	<div class="h-screen overflow-hidden flex justify-center">
 		<!-- View -->
-		<component :is="activeView" />
+		<component :is="activeView" v-bind="activeProps" />
 	</div>
 </template>

@@ -7,7 +7,7 @@ export const pkmnRefRaw = (natID: number, isShiny: boolean) => {
 };
 
 export const dataExists = (data: unknown) => {
-	if (JSON.stringify(data) === "{}" || data == null) {
+	if (JSON.stringify(data) === "{}" || data === null || data === undefined) {
 		return false;
 	}
 	return true;
