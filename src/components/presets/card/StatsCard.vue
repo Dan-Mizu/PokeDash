@@ -8,43 +8,111 @@ const props = defineProps<{
 
 <template>
 	<div :class="panelStyle">
-		<div class= "flex h-flex w-full p-3 grid">
-			<div class="bg-light-primary dark:bg-dark-primary rounded-md pt-1 text-s text-center my-2 py-2 px-3">
-				<!-- Encounter Infos -->
-				<span class="flex justify-center items-center text-center mt-2 text-s">
-					<div class="text-left">Total Encounters:&emsp;<br> {{ data.totals.encounters }}</div>
-					<div class="text-left">Phase Encounters:&emsp;<br> {{ data.totals.phase_encounters }}</div>
-				</span>
+		<div class="grid gap-2 w-full p-2 text-xs">
+			<!-- Encounter Infos -->
+			<div
+				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
+			>
+				<div class="grid grid-flow-row text-left">
+					<span>Total Encounters</span
+					><span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+						data.totals.encounters
+					}}</span>
+				</div>
+				<div class="grid grid-flow-row text-right">
+					<span>Phase Encounters</span>
+					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+						data.totals.phase_encounters
+					}}</span>
+				</div>
 			</div>
-			<div class="bg-light-primary dark:bg-dark-primary rounded-md p-1 text-s text-center my-2 py-2 px-3">
-				<!-- Total Highest IVSum -->
-				<span class="flex justify-center items-center text-center mt-2 text-s">
-					<div class="text-left">Total Highest IV Pokemon:&emsp;<br> {{ data.totals.highest_iv_sum_pokemon }}</div>
-					<div class="text-left">Total Highest IVSum:&emsp;<br> {{ data.totals.highest_iv_sum }}</div>
-				</span>
+
+			<!-- Total Highest IVSum -->
+			<div
+				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
+			>
+				<div class="grid grid-flow-row text-left">
+					<span>Total Highest IV Pokemon</span>
+					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+						data.totals.highest_iv_sum_pokemon
+					}}</span>
+				</div>
+				<div class="grid grid-flow-row text-right">
+					<span>Total Highest IVSum</span>
+					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+						data.totals.highest_iv_sum
+					}}</span>
+				</div>
 			</div>
-			<div class="bg-light-primary dark:bg-dark-primary rounded-md p-1 text-s text-center my-2 py-2 px-3">
-				<!-- Total Lowest IVSum -->
-				<span class="flex justify-center items-center text-center mt-2 text-s">
-					<div class="text-left">Total Lowest IV Pokemon:&emsp;<br> {{ data.totals.lowest_iv_sum_pokemon }}</div>
-					<div class="text-left">Total Lowest IVSums:&emsp;<br> {{ data.totals.lowest_iv_sum }}</div>
-				</span>
+
+			<!-- Total Lowest IVSum -->
+			<div
+				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
+			>
+				<div class="grid grid-flow-row text-left">
+					<span>Total Lowest IV Pokemon</span>
+					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+						data.totals.lowest_iv_sum_pokemon
+					}}</span>
+				</div>
+				<div class="grid grid-flow-row text-right">
+					<span>Total Lowest IVSums</span>
+					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+						data.totals.lowest_iv_sum
+					}}</span>
+				</div>
 			</div>
-			<div class="bg-light-primary dark:bg-dark-primary rounded-md p-1 text-s text-center my-2 py-2 px-3">
-				<!-- Phase Lowest IVSum -->
-				<span class="flex justify-center items-center text-center mt-2 text-s">
-					<div class="text-left">Phase Lowest IV Pokemon:&emsp;<br> {{ data.totals.phase_lowest_iv_sum_pokemon }}</div>
-					<div class="text-left">Phase Lowest IVSum:&emsp;<br> {{ data.totals.phase_lowest_iv_sum }}</div>
-				</span>
+
+			<!-- Phase Lowest IVSum -->
+			<div
+				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
+			>
+				<div class="grid grid-flow-row text-left">
+					<span>Phase Lowest IV Pokemon</span>
+					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+						data.totals.phase_lowest_iv_sum_pokemon
+					}}</span>
+				</div>
+				<div class="grid grid-flow-row text-right">
+					<span>Phase Lowest IVSum</span>
+					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+						data.totals.phase_lowest_iv_sum
+					}}</span>
+				</div>
 			</div>
-			<div class="bg-light-primary dark:bg-dark-primary rounded-md p-1 text-s text-center my-2 py-2 px-3">
-				<!-- Shiny averages -->
-				<span class="flex justify-center items-center text-center mt-2 text-s">
-					<div class="text-left">Shiny Average:&emsp;<br> {{ data.totals.shiny_average }}</div>
-					<div class="text-left">Shiny Encounters:&emsp;<br> {{ data.totals.shiny_encounters }}</div>
-					<div class="text-left">Shortest Phase Encounters:&emsp;&emsp;<br> {{ data.totals.shortest_phase_encounters }}</div>
-					<div class="text-left">Shortest Phase Pokemon:&emsp;<br> {{ data.totals.shortest_phase_pokemon }}</div>
-				</span>
+
+			<!-- Shiny averages -->
+			<div
+				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
+			>
+				<div class="grid grid-flow-row gap-2">
+					<div class="grid grid-flow-row text-left">
+						<span>Shiny Average</span>
+						<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+							data.totals.shiny_average
+						}}</span>
+					</div>
+					<div class="grid grid-flow-row text-left">
+						<span>Shortest Phase Pokemon</span>
+						<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+							data.totals.shortest_phase_pokemon
+						}}</span>
+					</div>
+				</div>
+				<div class="grid grid-flow-row gap-2">
+					<div class="grid grid-flow-row text-right">
+						<span>Shiny Encounters</span>
+						<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+							data.totals.shiny_encounters
+						}}</span>
+					</div>
+					<div class="grid grid-flow-row text-right">
+						<span>Shortest Phase Encounters</span>
+						<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+							data.totals.shortest_phase_encounters
+						}}</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
