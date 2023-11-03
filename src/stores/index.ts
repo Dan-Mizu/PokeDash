@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 // utility functions
-import { dataExists, pkmnRefRaw } from "~/utility";
+import { pkmnRefRaw } from "~/utility";
 
 // default state values
 import defaults from "./defaults";
@@ -27,69 +27,41 @@ export default defineStore(
 
 		// methods
 		const fetchInstanceEndpointData = async (
-			instanceID: number,
-			key: InstanceDataKey,
-			force: boolean = false
-		) => {
-			useFetch("http://" + instances.value[instanceID] + "/" + key).then(
+			apiURL: string,
+			key: InstanceDataKey
+		): Promise<InstanceData | null> => {
+			// fetch provided endpoint from provided api
+			return await useFetch("http://" + apiURL + "/" + key).then(
 				(response) => {
-					// data received
-					if (dataExists(response.data.value))
-						// store api response data
-						(instanceData.value[instanceID][key] as any) =
-							response.data.value;
 					// error
-					else if (force) {
-						new Promise(() =>
-							setTimeout(() => {
-								fetchInstanceEndpointData(instanceID, key);
-							}, 1000)
-						);
+					if (response.error.value) {
+						// notification
+						console.log("API FETCH ERROR:", response.error.value, response);
+
+						// send null
+						return null;
 					}
+
+					// success
+					else {
+						// send data
+						return response.data.value as InstanceData;
+					}
+				},
+				// exception
+				(exception) => {
+					// notification
+					console.log("API FETCH EXCEPTION:", exception);
+
+					// send null
+					return null;
 				}
 			);
-
-			// // update pokemon sprite cache from party data
-			// if (
-			// 	key === "party" &&
-			// 	instanceData.value[instanceID].party.length > 0
-			// )
-			// 	// loop through pokemon in party of instance
-			// 	for (const pokemon of instanceData.value[instanceID].party) {
-			// 		// fetch this pokemon's sprite if not already cached
-			// 		updatePokemonSpriteCache(pokemon);
-			// 	}
-
-			// // update pokemon sprite cache from encounter log data
-			// if (
-			// 	key === "encounter_log" &&
-			// 	instanceData.value[instanceID].encounter_log.length > 0
-			// )
-			// 	// loop through encountered pokemon in encounter log of instance
-			// 	for (const encounteredPokemon of instanceData.value[instanceID]
-			// 		.encounter_log) {
-			// 		// fetch this pokemon's sprite if not already cached
-			// 		updatePokemonSpriteCache(encounteredPokemon.pokemon);
-			// 	}
-
-			// // update pokemon sprite cache from shiny log data
-			// if (
-			// 	key === "shiny_log" &&
-			// 	instanceData.value[instanceID].shiny_log.length > 0
-			// )
-			// 	// loop through encountered pokemon in encounter log of instance
-			// 	for (const encounteredPokemon of instanceData.value[instanceID]
-			// 		.shiny_log) {
-			// 		// fetch this pokemon's sprite if not already cached
-			// 		updatePokemonSpriteCache(encounteredPokemon.pokemon);
-			// 	}
 		};
 		const fetchAllInstanceEndpointData = async (
-			instanceID: number,
-			force: boolean = false
-		) => {
-			// init/reset instance data
-			instanceData.value[instanceID] = {
+			apiURL: string
+		): Promise<IInstanceData> => {
+			let newInstanceData = {
 				trainer: {},
 				items: {},
 				party: {},
@@ -97,17 +69,20 @@ export default defineStore(
 				shiny_log: {},
 				encounter_rate: {},
 				stats: {},
-			} as any;
+			} as any; //TODO: have to type as any because i'm instancing it and typescript doesn't like setting empty objects... fix this eventually idk
 
 			// loop through all endpoints
-			for (const key in instanceData.value[instanceID]) {
-				// fetch individual endpoints
-				fetchInstanceEndpointData(
-					instanceID,
-					key as InstanceDataKey,
-					force
-				);
+			for (const key in newInstanceData) {
+				await fetchInstanceEndpointData(
+					apiURL,
+					key as InstanceDataKey
+				).then((response) => {
+					newInstanceData[key] = response;
+				});
 			}
+
+			// send new instance data
+			return newInstanceData as IInstanceData;
 		};
 
 		// caching pokemon sprites from PokeAPI

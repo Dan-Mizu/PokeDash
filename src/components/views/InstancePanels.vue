@@ -1,7 +1,13 @@
 <script setup lang="ts">
-// get state
-import useStore from "~/stores";
-const store = useStore();
+// props
+const props = withDefaults(
+	defineProps<{
+		instances: string[] | string;
+		instanceData: IInstanceData[] | IInstanceData;
+		allowInstanceManipulation?: boolean;
+	}>(),
+	{ allowInstanceManipulation: true }
+);
 
 // individual panel style
 const panelStyleBase =
@@ -22,16 +28,19 @@ const modalAddInstanceOpen = ref(false);
 	<!-- Buttons -->
 	<div class="flex flex-col m-4 absolute top-0 right-0">
 		<ThemeButton />
-		<div class="mb-2"></div>
-		<IconButton
-			@clickEvent="() => (modalAddInstanceOpen = true)"
-			icon="i-material-symbols-add-box-rounded"
-		/>
+		<span v-if="props.allowInstanceManipulation">
+			<div class="mb-2"></div>
+			<IconButton
+				@clickEvent="() => (modalAddInstanceOpen = true)"
+				icon="i-material-symbols-add-box-rounded"
+			/>
+		</span>
 	</div>
 
 	<!-- Content -->
 	<div class="mt-5 w-[90%] flex justify-center">
 		<ul class="overflow-auto my-3 w-full scrollbar-hidden">
+			<!-- Titles -->
 			<li class="flex justify-center mb-3">
 				<!-- Sidebar Spacing -->
 				<div
@@ -61,11 +70,25 @@ const modalAddInstanceOpen = ref(false);
 					<h1 class="font-bold">Stats</h1>
 				</div>
 			</li>
+
+			<!-- Multiple Instances -->
 			<li
-				v-for="(_apiURL, index) in store.instances"
+				v-if="props.instances instanceof Array"
+				v-for="(_apiURL, index) in props.instances"
 				class="flex justify-center mb-3"
 			>
-				<InstancePanel :panelStyle="panelStyle" :instanceID="index" />
+				<InstancePanel
+					:panelStyle="panelStyle"
+					:instanceData="(props.instanceData as IInstanceData[])[index]"
+				/>
+			</li>
+
+			<!-- Single Instance -->
+			<li v-else class="flex justify-center mb-3">
+				<InstancePanel
+					:panelStyle="panelStyle"
+					:instanceData="(props.instanceData as IInstanceData)"
+				/>
 			</li>
 		</ul>
 

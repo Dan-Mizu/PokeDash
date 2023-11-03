@@ -25,7 +25,13 @@ const submit = () => {
 		store.instances.push(input);
 
 		// queue instance api fetch
-		store.fetchAllInstanceEndpointData(store.instances.length - 1);
+		store
+			.fetchAllInstanceEndpointData(input)
+			.then(
+				(response: IInstanceData | undefined | null) =>
+					(store.instanceData[store.instances.length - 1] =
+						response as IInstanceData)
+			);
 	}
 };
 </script>
