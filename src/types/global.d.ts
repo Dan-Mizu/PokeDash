@@ -2,12 +2,22 @@
 interface IInstanceData {
 	trainer: ITrainer;
 	items: IItems;
-	party: IPokemon[];
+	party: TParty;
 	encounter_log: TEncounterLog;
 	shiny_log: TShinyLog;
 	encounter_rate: TEncounterRate;
 	stats: IStats;
 }
+
+/** Possible Endpoint Data */
+type InstanceData =
+| ITrainer
+| IItems
+| TParty
+| TEncounterLog
+| TShinyLog
+| TEncounterRate
+| IStats;
 
 /** Possible Endpoints */
 type InstanceDataKey =

@@ -2,66 +2,57 @@
 // utility functions
 import { dataExists } from "~/utility";
 
-// get state
-import useStore from "~/stores";
-const store = useStore();
-
 // props
 const props = defineProps<{
-	instanceID: number;
+	instanceData: IInstanceData;
 	panelStyle: string[];
 }>();
+
+//FIXME: what the hell is going on here? first var returns with properties fully propagated, but the second is empty- but only on first load?
+// console.log(props.instanceData, (props.instanceData).trainer, dataExists(props.instanceData.trainer))
 </script>
 
 <template>
 	<!-- Sidebar -->
-	<Sidebar :panel-style="panelStyle[0]" />
+	<Sidebar :panel-style="props.panelStyle[0]" />
 
 	<!-- Trainer Info -->
 	<LoadingCard
-		:panel-style="panelStyle[1]"
-		v-if="!dataExists(store.instanceData[instanceID].trainer)"
+		:panel-style="props.panelStyle[1]"
+		v-if="!dataExists(props.instanceData.trainer)"
 	/>
 	<TrainerCard
 		v-else
-		:panel-style="panelStyle[1]"
-		:data="store.instanceData[instanceID].trainer"
+		:panel-style="props.panelStyle[1]"
+		:data="props.instanceData.trainer"
 	/>
 
 	<!-- Team Info -->
 	<LoadingCard
-		:panel-style="panelStyle[2]"
-		v-if="!dataExists(store.instanceData[instanceID].party)"
+		:panel-style="props.panelStyle[2]"
+		v-if="!dataExists(props.instanceData.party)"
 	/>
-	<PartyCard
-		v-else
-		:panel-style="panelStyle[2]"
-		:data="store.instanceData[instanceID].party"
-	/>
+	<PartyCard v-else :panel-style="panelStyle[2]" :data="props.instanceData.party" />
 
 	<!-- Encounter Info -->
 	<LoadingCard
-		:panel-style="panelStyle[3]"
+		:panel-style="props.panelStyle[3]"
 		v-if="
-			!dataExists(store.instanceData[instanceID].encounter_log) ||
-			!dataExists(store.instanceData[instanceID].shiny_log)
+			!dataExists(props.instanceData.encounter_log) ||
+			!dataExists(props.instanceData.shiny_log)
 		"
 	/>
 	<EncountersCard
 		v-else
-		:panel-style="panelStyle[3]"
-		:encounter-log-data="store.instanceData[instanceID].encounter_log"
-		:shiny-log-data="store.instanceData[instanceID].shiny_log"
+		:panel-style="props.panelStyle[3]"
+		:encounter-log-data="props.instanceData.encounter_log"
+		:shiny-log-data="props.instanceData.shiny_log"
 	/>
 
 	<!-- Stats -->
 	<LoadingCard
-		:panel-style="panelStyle[4]"
-		v-if="!dataExists(store.instanceData[instanceID].stats)"
+		:panel-style="props.panelStyle[4]"
+		v-if="!dataExists(props.instanceData.stats)"
 	/>
-	<StatsCard
-		v-else
-		:panel-style="panelStyle[4]"
-		:data="store.instanceData[instanceID].stats"
-	/>
+	<StatsCard v-else :panel-style="props.panelStyle[4]" :data="props.instanceData.stats" />
 </template>

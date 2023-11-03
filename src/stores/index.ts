@@ -27,69 +27,61 @@ export default defineStore(
 
 		// methods
 		const fetchInstanceEndpointData = async (
-			instanceID: number,
+			apiURL: string,
 			key: InstanceDataKey,
 			force: boolean = false
 		) => {
-			useFetch("http://" + instances.value[instanceID] + "/" + key).then(
-				(response) => {
-					// data received
-					if (dataExists(response.data.value))
-						// store api response data
-						(instanceData.value[instanceID][key] as any) =
-							response.data.value;
-					// error
-					else if (force) {
-						new Promise(() =>
-							setTimeout(() => {
-								fetchInstanceEndpointData(instanceID, key);
-							}, 1000)
-						);
+			// return useFetch("http://" + apiURL + "/" + key).then((response) => {
+			// 	// data received
+			// 	if (dataExists(response.data.value)) {
+			// 		console.log("fetched successfully", response.data.value);
+			// 		return response.data.value as InstanceData;
+			// 	}
+			// 	// error- try again
+			// 	else if (force) {
+			// 		console.log("forcing...");
+			// 		setTimeout(() => {
+			// 			return fetchInstanceEndpointData(apiURL, key);
+			// 		}, 1000);
+			// 	}
+			// 	// error- return null
+			// 	else {
+			// 		// failed to fetch and won't force
+			// 		console.log("not forcing...");
+			// 		return null;
+			// 	}
+			// });
+			// return await useFetch("/" + key, {
+			// 	method: "GET",
+			// 	baseURL: "http://" + apiURL,
+			// 	onResponse: ({ request, response, options }) => {
+			// 		console.log(response);
+			// 	},
+			// 	onResponseError: ({ request, response, options }) => {
+			// 		console.log(response);
+			// 	},
+			// });
+			return await useFetch("http://" + apiURL + "/" + key).then(
+				(res) => {
+					const data = res.data.value;
+					const error = res.error.value;
+					if (error) {
+						console.log(error);
+					} else {
+						console.log("successful", data, res)
 					}
+				},
+				(error) => {
+					console.log("exception...");
+					console.log(error);
 				}
 			);
-
-			// // update pokemon sprite cache from party data
-			// if (
-			// 	key === "party" &&
-			// 	instanceData.value[instanceID].party.length > 0
-			// )
-			// 	// loop through pokemon in party of instance
-			// 	for (const pokemon of instanceData.value[instanceID].party) {
-			// 		// fetch this pokemon's sprite if not already cached
-			// 		updatePokemonSpriteCache(pokemon);
-			// 	}
-
-			// // update pokemon sprite cache from encounter log data
-			// if (
-			// 	key === "encounter_log" &&
-			// 	instanceData.value[instanceID].encounter_log.length > 0
-			// )
-			// 	// loop through encountered pokemon in encounter log of instance
-			// 	for (const encounteredPokemon of instanceData.value[instanceID]
-			// 		.encounter_log) {
-			// 		// fetch this pokemon's sprite if not already cached
-			// 		updatePokemonSpriteCache(encounteredPokemon.pokemon);
-			// 	}
-
-			// // update pokemon sprite cache from shiny log data
-			// if (
-			// 	key === "shiny_log" &&
-			// 	instanceData.value[instanceID].shiny_log.length > 0
-			// )
-			// 	// loop through encountered pokemon in encounter log of instance
-			// 	for (const encounteredPokemon of instanceData.value[instanceID]
-			// 		.shiny_log) {
-			// 		// fetch this pokemon's sprite if not already cached
-			// 		updatePokemonSpriteCache(encounteredPokemon.pokemon);
-			// 	}
 		};
 		const fetchAllInstanceEndpointData = async (
-			instanceID: number,
+			apiURL: string,
 			force: boolean = false
-		) => {
-			// init/reset instance data
-			instanceData.value[instanceID] = {
+		): Promise<IInstanceData> => {
+			let newInstanceData = {
 				trainer: {},
 				items: {},
 				party: {},
@@ -97,17 +89,28 @@ export default defineStore(
 				shiny_log: {},
 				encounter_rate: {},
 				stats: {},
-			} as any;
+			} as any; //TODO: have to type as any because i'm instancing it and typescript doesn't like setting empty objects... fix this eventually idk
 
 			// loop through all endpoints
-			for (const key in instanceData.value[instanceID]) {
+			for (const key in newInstanceData) {
 				// fetch individual endpoints
-				fetchInstanceEndpointData(
-					instanceID,
+				// fetchInstanceEndpointData(
+				// 	apiURL,
+				// 	key as InstanceDataKey,
+				// 	force
+				// ).then(
+				// 	(response: InstanceData | undefined | null) =>
+				// 		(newInstanceData[key] = response)
+				// );
+				await fetchInstanceEndpointData(
+					apiURL,
 					key as InstanceDataKey,
 					force
 				);
 			}
+
+			// send new instance data
+			return newInstanceData as IInstanceData;
 		};
 
 		// caching pokemon sprites from PokeAPI
