@@ -7,17 +7,19 @@ interface IInstanceData {
 	shiny_log: TShinyLog;
 	encounter_rate: TEncounterRate;
 	stats: IStats;
+	emulator: IEmulator;
 }
 
 /** Possible Endpoint Data */
 type InstanceData =
-| ITrainer
-| IItems
-| TParty
-| TEncounterLog
-| TShinyLog
-| TEncounterRate
-| IStats;
+	| ITrainer
+	| IItems
+	| TParty
+	| TEncounterLog
+	| TShinyLog
+	| TEncounterRate
+	| IStats
+	| IEmulator;
 
 /** Possible Endpoints */
 type InstanceDataKey =
@@ -27,7 +29,8 @@ type InstanceDataKey =
 	| "encounter_log"
 	| "shiny_log"
 	| "encounter_rate"
-	| "stats";
+	| "stats"
+	| "emulator";
 
 /** Trainer API Response */
 interface ITrainer {
@@ -464,34 +467,6 @@ type TEncounterRate = number;
 /** Shiny Log Data */
 type TShinyLog = IShinyPokemon[];
 
-/** FPS Log Data */
-type TFps = number[];
-
-/** Emulator Data */
-interface IEmulator {
-	audio_enabled: boolean;
-	bot_mode: string;
-	current_fps: number;
-	current_message: string;
-	current_time_spent_in_bot_fraction: number;
-	emulation_speed: number;
-	frame_count: number;
-	video_enabled: boolean;
-	game: {
-		[key: string]: {
-			language: string;
-			name: string;
-			revision: number;
-			title: string;
-		};
-	};
-	profile: {
-		[key: string]: {
-			name: string;
-		};
-	};
-}
-
 /** Shiny Pokemon Data */
 interface IShinyPokemon {
 	pokemon: IPokemon;
@@ -543,4 +518,28 @@ interface IStats {
 		shortest_phase_encounters: number;
 		shortest_phase_pokemon: string;
 	};
+}
+
+/** FPS Log Data */
+type TFps = number[];
+
+/** Emulator Data */
+interface IEmulator {
+	audio_enabled: boolean;
+	bot_mode: string;
+	current_fps: number;
+	current_message: string;
+	current_time_spent_in_bot_fraction: number;
+	emulation_speed: number;
+	frame_count: number;
+	game: {
+		language: string;
+		name: string;
+		revision: number;
+		title: string;
+	};
+	profile: {
+		name: string;
+	};
+	video_enabled: boolean;
 }
