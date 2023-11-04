@@ -23,4 +23,15 @@ body {
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
+
+/* image rendering */
+.rendering-auto {
+	image-rendering: auto;
+}
+.rendering-crisp-edges {
+	image-rendering: crisp-edges;
+}
+.rendering-pixelated {
+	image-rendering: pixelated;
+}
 </style>

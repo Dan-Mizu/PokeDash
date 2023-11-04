@@ -21,7 +21,8 @@ const props = defineProps<{
 	<TrainerCard
 		v-else
 		:panel-style="props.panelStyle[1]"
-		:data="props.instanceData.trainer"
+		:trainer-data="props.instanceData.trainer"
+		:emulator-data="props.instanceData.emulator"
 	/>
 
 	<!-- Team Info -->

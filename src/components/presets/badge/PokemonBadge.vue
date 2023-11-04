@@ -51,6 +51,7 @@ store
 			<Spinner v-if="!spriteSrc" />
 			<img
 				v-else
+				class="rendering-pixelated"
 				:src="spriteSrc"
 				:title="data.name + (data.shiny ? ' (Shiny)' : '')"
 			/>

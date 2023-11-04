@@ -35,7 +35,6 @@ const activeProps = computed(() => {
 		return {
 			instances: store.instances,
 			instanceData: store.instanceData,
-			allowInstanceManipulation: false,
 		};
 	}
 });

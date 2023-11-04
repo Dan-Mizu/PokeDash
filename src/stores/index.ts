@@ -36,7 +36,11 @@ export default defineStore(
 					// error
 					if (response.error.value) {
 						// notification
-						console.log("API FETCH ERROR:", response.error.value, response);
+						console.log(
+							"API FETCH ERROR:",
+							response.error.value,
+							response
+						);
 
 						// send null
 						return null;
@@ -69,6 +73,7 @@ export default defineStore(
 				shiny_log: {},
 				encounter_rate: {},
 				stats: {},
+				emulator: {},
 			} as any; //TODO: have to type as any because i'm instancing it and typescript doesn't like setting empty objects... fix this eventually idk
 
 			// loop through all endpoints
