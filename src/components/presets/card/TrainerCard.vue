@@ -105,6 +105,8 @@ const game: "frlg" | "rse" = ["FIRE", "LEAF"].includes(
 					{{ trainerData.coords[1] }})
 				</span>
 			</div>
+			
+			<!-- TODO: Map info from here: https://github.com/SimplyBLGDev/simplyblgdev.github.io/tree/master -->
 			<!-- TODO: Target Mon?-->
 		</div>
 	</div>
