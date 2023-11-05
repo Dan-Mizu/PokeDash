@@ -37,6 +37,7 @@ const game: "frlg" | "rse" = ["FIRE", "LEAF"].includes(
 			>
 				<img
 					class="w-full rendering-pixelated"
+					referrerpolicy="no-referrer"
 					:src="spriteTrainer[props.trainerData.gender][game]"
 				/>
 			</div>
