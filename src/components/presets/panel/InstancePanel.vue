@@ -11,12 +11,32 @@ const props = defineProps<{
 
 <template>
 	<!-- Sidebar -->
-	<Sidebar :panel-style="props.panelStyle[0]" />
+	<Sidebar
+		:panel-style="props.panelStyle[0]"
+		:stats-data="
+			props.instanceData
+				? props.instanceData.stats
+					? props.instanceData.stats
+					: undefined
+				: undefined
+		"
+		:shiny-data="
+			props.instanceData
+				? props.instanceData.shiny_log
+					? props.instanceData.shiny_log
+					: undefined
+				: undefined
+		"
+	/>
 
 	<!-- Trainer Info -->
 	<LoadingCard
 		:panel-style="props.panelStyle[1]"
-		v-if="!props.instanceData || !dataExists(props.instanceData.trainer)"
+		v-if="
+			!props.instanceData ||
+			!dataExists(props.instanceData.trainer) ||
+			!dataExists(props.instanceData.emulator)
+		"
 	/>
 	<TrainerCard
 		v-else

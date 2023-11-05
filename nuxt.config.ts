@@ -71,7 +71,7 @@ export default defineNuxtConfig({
 		"nuxt-viewport",
 	],
 	ui: {
-		icons: ["tabler", "material-symbols"],
+		icons: ["tabler", "material-symbols", "fluent"],
 	},
 	colorMode: {
 		classSuffix: "",
