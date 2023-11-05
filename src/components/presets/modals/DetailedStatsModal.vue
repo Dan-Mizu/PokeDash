@@ -3,6 +3,7 @@
 const props = defineProps<{
 	open: boolean;
 	statsData: IStats;
+	emuData: IEmulator;
 }>();
 </script>
 
@@ -17,7 +18,7 @@ const props = defineProps<{
 
 		<!-- Body -->
 		<template #default>
-			<div class="grid gap-2 w-full p-2 text-xs">
+			<div class="grid p-2 w-flex h-full text-sm gap-2">
 				<!-- Encounter Infos -->
 				<div
 					class="bg-light-secondary dark:bg-dark-secondary rounded-md grid grid-flow-col p-2 gap-2"
@@ -141,9 +142,10 @@ const props = defineProps<{
 						</div>
 					</div>
 				</div>
+									
+					<!-- TODO: Make this retarded modal let me add more data without disappearing -->
 			</div>
 		</template>
-
 		<!-- Footer -->
 		<!-- <template #footer> </template> -->
 	</Modal>
