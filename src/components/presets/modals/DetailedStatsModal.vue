@@ -1,11 +1,33 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
+
 // props
 const props = defineProps<{
-	open: boolean;
-	statsData: IStats;
-	emulatorData: IEmulator;
+    open: boolean;
+    statsData: IStats;
+    emulatorData: IEmulator;
 }>();
+
+// Reactive variable to store the calculated percentage
+const fpsPercentage = ref<string>("");
+
+onMounted(() => {
+    // Calculate and update the percentage after the component is mounted
+    calculatePercentage();
+});
+
+function calculatePercentage() {
+    // Assuming emulatorData.current_fps contains the current FPS value
+    const currentFps = props.emulatorData.current_fps;
+    
+    // Calculate the percentage based on the formula (current_fps / 59.7) * 100
+    const percentage = (currentFps / 59.7) * 100;
+    
+    // Update the reactive variable
+    fpsPercentage.value = percentage.toFixed(2) + "%";
+}
 </script>
+
 
 <template>
 	<Modal :open="open" @closeModal="$emit('closeModal')">
@@ -100,67 +122,126 @@ const props = defineProps<{
 						>
 					</div>
 				</div>
-
-				<!-- Shiny averages -->
+				<!-- Phase Phase Streak -->
 				<div
 					class="bg-light-secondary dark:bg-dark-secondary rounded-md grid grid-flow-col p-2 gap-2"
 				>
-					<div class="grid grid-flow-row gap-2">
-						<div class="grid grid-flow-row text-left">
-							<span>Shiny Average</span>
-							<span
-								class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-								>{{ statsData.totals.shiny_average }}</span
-							>
-						</div>
-						<div class="grid grid-flow-row text-left">
-							<span>Shortest Phase Pokemon</span>
-							<span
-								class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-								>{{
-									statsData.totals.shortest_phase_pokemon
-								}}</span
-							>
-						</div>
+					<div class="grid grid-flow-row text-left">
+						<span>Phase Current Streak Pokemon</span>
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+							>{{
+								statsData.totals.phase_streak_pokemon
+							}}</span
+						>
 					</div>
-					<div class="grid grid-flow-row gap-2">
-						<div class="grid grid-flow-row text-right">
-							<span>Shiny Encounters</span>
-							<span
-								class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-								>{{ statsData.totals.shiny_encounters }}</span
-							>
-						</div>
-						<div class="grid grid-flow-row text-right">
-							<span>Shortest Phase Encounters</span>
-							<span
-								class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-								>{{
-									statsData.totals.shortest_phase_encounters
-								}}</span
-							>
-						</div>
+					<div class="grid grid-flow-row text-right">
+						<span>Phase Current Streak</span>
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+							>{{ statsData.totals.phase_streak }}</span
+						>
+					</div>
+				</div>
+				<!-- Shortest Phases Streak -->
+				<div
+					class="bg-light-secondary dark:bg-dark-secondary rounded-md grid grid-flow-col p-2 gap-2"
+				>
+					<div class="grid grid-flow-row text-left">
+						<span>Shortest Streak Pokemon</span>
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+							>{{
+								statsData.totals.shortest_phase_pokemon
+							}}</span
+						>
+					</div>
+					<div class="grid grid-flow-row text-right">
+						<span>PhShortest Streak</span>
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+							>{{ statsData.totals.shortest_phase_encounters }}</span
+						>
+					</div>
+				</div>
+				<!-- Shiny Averages -->
+				<div
+					class="bg-light-secondary dark:bg-dark-secondary rounded-md grid grid-flow-col p-2 gap-2"
+				>
+					<div class="grid grid-flow-row text-left">
+						<span>Shiny Average</span>
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+							>{{
+								statsData.totals.shiny_average
+							}}</span
+						>
+					</div>
+					<div class="grid grid-flow-row text-right">
+						<span>Total Encountered Shinies</span>
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+							>{{ statsData.totals.shiny_encounters }}</span
+						>
 					</div>
 				</div>
 
 				<!-- TODO: Make this retarded modal let me add more data without disappearing -->
 				<!-- Example -->
+
 				<div
 					class="bg-light-secondary dark:bg-dark-secondary rounded-md grid grid-flow-col p-2 gap-2"
 				>
 					<div class="grid grid-flow-row text-left">
-						<span>Data</span>
+						<span>Game Data</span>
 						<span
 							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-							>Test</span
+							>Game: {{ emulatorData.game.name }}</span
+						>
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+							>Rev: {{ emulatorData.game.revision }}</span
 						>
 					</div>
 					<div class="grid grid-flow-row text-right">
-						<span>Data 2</span>
+						<span>Profile Name</span>
 						<span
 							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-							>Test 2</span
+							>{{ emulatorData.profile.name }}</span
 						>
+					</div>
+				</div>
+				<!-- Current Emulation Speed -->
+				<div class="bg-light-secondary dark:bg-dark-secondary rounded-md grid grid-flow-col p-2 gap-2">
+					<div class="grid grid-flow-row text-left">
+						<span>Current Emulation Speed</span>
+						<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">
+							{{ emulatorData.emulation_speed }} - Running at <span>{{ fpsPercentage }}</span>
+						</span>
+					</div>
+					<div class="grid grid-flow-row text-right">
+						<span>Current FPS</span>
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+							>{{ emulatorData.current_fps }}</span
+						>
+					</div>
+				</div>
+				<div
+					class="bg-light-secondary dark:bg-dark-secondary rounded-md grid grid-flow-col p-2 gap-2"
+				>
+					<div class="grid grid-flow-row text-left">
+						<span>Current Mode</span>
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+							>{{ emulatorData.bot_mode }}</span
+						>
+					</div>
+					<div class="grid grid-flow-row text-right">
+						<span>Current Message</span>
+						<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">
+							{{ emulatorData.current_message }}
+						</span>
 					</div>
 				</div>
 			</div>

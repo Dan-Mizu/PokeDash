@@ -78,7 +78,7 @@ const encounterType = ref(0);
 
 		<!-- Body -->
 		<template #default>
-			<div class="flex flex-col h-[44vh] w-full self-start">
+			<div class="flex flex-col h-[44vh] self-start">
 				<!-- Encounter Stats -->
 				<div class="flex flex-1 flex-grow w-full"></div>
 
@@ -114,6 +114,7 @@ const encounterType = ref(0);
 				<!-- Encountered Wild Pokemon List -->
 				<div class="flex flex-grow min-h-0 w-full justify-center">
 					<!-- TODO: Switch encounter log with Pokemon Totals -->
+					<!-- TODO: Get it to load in 6x6 table or whatever looks good -->
 					<ul
 						v-if="encounterType === 0"
 						ref="encounteredWildPokemonList"
