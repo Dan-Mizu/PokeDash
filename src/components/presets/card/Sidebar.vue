@@ -3,7 +3,9 @@
 const props = defineProps<{
 	panelStyle: string;
 	statsData: IStats | undefined;
+	emulatorData: IEmulator | undefined;
 	shinyData: TShinyLog | undefined;
+	encounterLogData: TEncounterLog | undefined;
 }>();
 
 // modal visibility
@@ -49,17 +51,19 @@ const modalShinyDexOpen = ref(false);
 
 	<!-- Detailed Stats Modal -->
 	<DetailedStatsModal
-		v-if="statsData"
+		v-if="statsData && emulatorData"
 		:open="modalDetailedStatsOpen"
 		@closeModal="modalDetailedStatsOpen = false"
 		:stats-data="statsData"
+		:emulator-data="emulatorData"
 	/>
 
 	<!-- Shiny Dex Modal -->
 	<ShinyDexModal
-		v-if="shinyData"
+		v-if="shinyData && encounterLogData"
 		:open="modalShinyDexOpen"
 		@closeModal="modalShinyDexOpen = false"
 		:shiny-data="shinyData"
+		:encounter-log-data="encounterLogData"
 	/>
 </template>

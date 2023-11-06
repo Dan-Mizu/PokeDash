@@ -20,6 +20,20 @@ const props = defineProps<{
 					: undefined
 				: undefined
 		"
+		:emulator-data="
+			props.instanceData
+				? props.instanceData.emulator
+					? props.instanceData.emulator
+					: undefined
+				: undefined
+		"
+		:encounter-log-data="
+			props.instanceData
+				? props.instanceData.encounter_log
+					? props.instanceData.encounter_log
+					: undefined
+				: undefined
+		"
 		:shiny-data="
 			props.instanceData
 				? props.instanceData.shiny_log
