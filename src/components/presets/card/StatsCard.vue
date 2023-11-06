@@ -1,29 +1,32 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+//import { onMounted, ref } from 'vue';
+
+
 // props
 const props = defineProps<{
 	panelStyle: string;
 	data: IStats;
-	emulatorData: IEmulator;
+	//emulatorData: IEmulator;
 }>();
+
 // Reactive variable to store the calculated percentage
-const fpsPercentage = ref<string>("");
+//const fpsPercentage = ref<string>("");
 
-onMounted(() => {
+//onMounted(() => {
     // Calculate and update the percentage after the component is mounted
-    calculatePercentage();
-});
+//    calculatePercentage();
+//});
 
-function calculatePercentage() {
+//function calculatePercentage() {
     // Assuming emulatorData.current_fps contains the current FPS value
-    const currentFps = props.emulatorData.current_fps;
+//    const currentFps = props.emulatorData.current_fps;
     
     // Calculate the percentage based on the formula (current_fps / 59.7) * 100
-    const percentage = (currentFps / 59.7) * 100;
+//    const percentage = (currentFps / 59.7) * 100;
     
     // Update the reactive variable
-    fpsPercentage.value = percentage.toFixed(2) + "%";
-}
+//    fpsPercentage.value = percentage.toFixed(2) + "%";
+//}
 </script>
 
 <template>
