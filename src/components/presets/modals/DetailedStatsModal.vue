@@ -40,7 +40,7 @@ function calculatePercentage() {
 
 		<!-- Body -->
 		<template #default>
-			<div class="grid gap-2 h-full p-2 text-sm">
+			<div class="grid gap-2 h-full p-2 text-xs">
 				<!-- Encounter Infos -->
 				<div
 					class="bg-light-secondary dark:bg-dark-secondary rounded-md grid grid-flow-col p-2 gap-2"
