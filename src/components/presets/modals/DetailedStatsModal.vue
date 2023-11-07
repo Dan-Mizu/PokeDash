@@ -1,33 +1,16 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-
 // props
 const props = defineProps<{
-    open: boolean;
-    statsData: IStats;
-    emulatorData: IEmulator;
+	open: boolean;
+	statsData: IStats;
+	emulatorData: IEmulator;
 }>();
 
-// Reactive variable to store the calculated percentage
-const fpsPercentage = ref<string>("");
-
-onMounted(() => {
-    // Calculate and update the percentage after the component is mounted
-    calculatePercentage();
+// format emulator fps data automatically
+const fpsPercentage: ComputedRef<string> = computed(() => {
+	return ((props.emulatorData.current_fps / 59.7) * 100).toFixed(2) + "%";
 });
-
-function calculatePercentage() {
-    // Assuming emulatorData.current_fps contains the current FPS value
-    const currentFps = props.emulatorData.current_fps;
-    
-    // Calculate the percentage based on the formula (current_fps / 59.7) * 100
-    const percentage = (currentFps / 59.7) * 100;
-    
-    // Update the reactive variable
-    fpsPercentage.value = percentage.toFixed(2) + "%";
-}
 </script>
-
 
 <template>
 	<Modal :open="open" @closeModal="$emit('closeModal')">
@@ -130,9 +113,7 @@ function calculatePercentage() {
 						<span>Phase Current Streak Pokemon</span>
 						<span
 							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-							>{{
-								statsData.totals.phase_streak_pokemon
-							}}</span
+							>{{ statsData.totals.phase_streak_pokemon }}</span
 						>
 					</div>
 					<div class="grid grid-flow-row text-right">
@@ -151,16 +132,16 @@ function calculatePercentage() {
 						<span>Shortest Streak Pokemon</span>
 						<span
 							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-							>{{
-								statsData.totals.shortest_phase_pokemon
-							}}</span
+							>{{ statsData.totals.shortest_phase_pokemon }}</span
 						>
 					</div>
 					<div class="grid grid-flow-row text-right">
 						<span>PhShortest Streak</span>
 						<span
 							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-							>{{ statsData.totals.shortest_phase_encounters }}</span
+							>{{
+								statsData.totals.shortest_phase_encounters
+							}}</span
 						>
 					</div>
 				</div>
@@ -172,9 +153,7 @@ function calculatePercentage() {
 						<span>Shiny Average</span>
 						<span
 							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-							>{{
-								statsData.totals.shiny_average
-							}}</span
+							>{{ statsData.totals.shiny_average }}</span
 						>
 					</div>
 					<div class="grid grid-flow-row text-right">
@@ -212,11 +191,16 @@ function calculatePercentage() {
 					</div>
 				</div>
 				<!-- Current Emulation Speed -->
-				<div class="bg-light-secondary dark:bg-dark-secondary rounded-md grid grid-flow-col p-2 gap-2">
+				<div
+					class="bg-light-secondary dark:bg-dark-secondary rounded-md grid grid-flow-col p-2 gap-2"
+				>
 					<div class="grid grid-flow-row text-left">
 						<span>Current Emulation Speed</span>
-						<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">
-							{{ emulatorData.emulation_speed }} - Running at <span>{{ fpsPercentage }}</span>
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+						>
+							{{ emulatorData.emulation_speed }} - Running at
+							<span>{{ fpsPercentage }}</span>
 						</span>
 					</div>
 					<div class="grid grid-flow-row text-right">
@@ -239,7 +223,9 @@ function calculatePercentage() {
 					</div>
 					<div class="grid grid-flow-row text-right">
 						<span>Current Message</span>
-						<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">
+						<span
+							class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+						>
 							{{ emulatorData.current_message }}
 						</span>
 					</div>
