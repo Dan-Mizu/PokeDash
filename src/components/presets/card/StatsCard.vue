@@ -50,38 +50,38 @@ const props = defineProps<{
 				</div>
 			</div>
 
-			<!-- Total Highest IVSum -->
+			<!-- Phase Highest IVSum -->
 			<div
 				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
 			>
 				<div class="grid grid-flow-row text-left">
-					<span>Total Highest IV Pokemon</span>
+					<span>Phase Lowest SV</span>
 					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
-						data.totals.highest_iv_sum_pokemon
+						data.totals.phase_lowest_sv
 					}}</span>
 				</div>
 				<div class="grid grid-flow-row text-right">
-					<span>Total Highest IVSum</span>
+					<span>Phase Lowest SV Pokemon</span>
 					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
-						data.totals.highest_iv_sum
+						data.totals.phase_lowest_sv_pokemon
 					}}</span>
 				</div>
 			</div>
 
-			<!-- Total Lowest IVSum -->
+			<!-- Phase Highest IVSum -->
 			<div
 				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
 			>
 				<div class="grid grid-flow-row text-left">
-					<span>Total Lowest IV Pokemon</span>
+					<span>Phase Highest IVSum</span>
 					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
-						data.totals.lowest_iv_sum_pokemon
+						data.totals.phase_highest_iv_sum
 					}}</span>
 				</div>
 				<div class="grid grid-flow-row text-right">
-					<span>Total Lowest IVSums</span>
+					<span>Phase Highest IVSum Pokemon</span>
 					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
-						data.totals.lowest_iv_sum
+						data.totals.phase_highest_iv_sum_pokemon
 					}}</span>
 				</div>
 			</div>
@@ -91,15 +91,15 @@ const props = defineProps<{
 				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
 			>
 				<div class="grid grid-flow-row text-left">
-					<span>Phase Lowest IV Pokemon</span>
-					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
-						data.totals.phase_lowest_iv_sum_pokemon
-					}}</span>
-				</div>
-				<div class="grid grid-flow-row text-right">
 					<span>Phase Lowest IVSum</span>
 					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
 						data.totals.phase_lowest_iv_sum
+					}}</span>
+				</div>
+				<div class="grid grid-flow-row text-right">
+					<span>Phase Lowest IVSum Pokemon</span>
+					<span class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder">{{
+						data.totals.phase_lowest_iv_sum_pokemon
 					}}</span>
 				</div>
 			</div>
@@ -108,19 +108,19 @@ const props = defineProps<{
 				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
 			>
 				<div class="grid grid-flow-row text-left">
-					<span>Shortest Streak Pokemon</span>
+					<span>Phase Streak Record</span>
 					<span
 						class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
 						>{{
-							data.totals.shortest_phase_pokemon
+							data.totals.phase_streak
 						}}</span
 					>
 				</div>
 				<div class="grid grid-flow-row text-right">
-					<span>PhShortest Streak</span>
+					<span>Phase Streak Record Mon</span>
 					<span
 						class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-						>{{ data.totals.shortest_phase_encounters }}</span
+						>{{ data.totals.phase_streak_pokemon }}</span
 					>
 				</div>
 			</div>
