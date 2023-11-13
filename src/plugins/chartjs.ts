@@ -3,17 +3,21 @@ import {
 	Title,
 	Tooltip,
 	Legend,
-	BarElement,
-	CategoryScale,
-	LinearScale,
+	Filler,
+	RadialLinearScale,
+	PointElement,
+	LineElement,
 } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 export default defineNuxtPlugin(() => {
 	Chart.register(
-		CategoryScale,
-		LinearScale,
-		BarElement,
 		Title,
 		Tooltip,
-		Legend
+		Legend,
+		ChartDataLabels,
+		Filler,
+		RadialLinearScale,
+		PointElement,
+		LineElement
 	);
 });
