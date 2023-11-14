@@ -13,7 +13,33 @@ const store = useStore();
 // initial active view
 const activeView: ShallowRef<Component> = shallowRef(Loading);
 
-const fetchData = async (apiURL: string, dataIndex: number) => {
+// Function to fetch encounter data
+const fetchEncounterData = async (apiURL: string, dataIndex: number) => {
+  try {
+    const response: IInstanceData = await store.fetchAllInstanceEndpointData(apiURL);
+
+    // save response for this endpoint on this instance
+    store.instanceData[dataIndex] = response;
+
+    // update lastFetched value
+    store.instances[dataIndex].lastFetched = Date.now();
+
+    // update lastFetchedEndpoint value
+    store.instances[dataIndex].lastFetchedEndpoint = {
+      encounter_log: undefined,
+      shiny_log: undefined,
+    };
+
+    for (const endpoint in response) {
+      (store.instances[dataIndex].lastFetchedEndpoint as CreateMutable<TInstanceEndpointLastFetched>)[endpoint as TInstanceEndpoint] = Date.now();
+    }
+  } catch (error) {
+    console.error(`Error fetching data for ${apiURL}`, error);
+  }
+};
+
+// Function to fetch slow data that doesnt change much
+const fetchSlowData = async (apiURL: string, dataIndex: number) => {
   try {
     const response: IInstanceData = await store.fetchAllInstanceEndpointData(apiURL);
 
@@ -26,10 +52,31 @@ const fetchData = async (apiURL: string, dataIndex: number) => {
     // update lastFetchedEndpoint value
     store.instances[dataIndex].lastFetchedEndpoint = {
       trainer: undefined,
-      items: undefined,
+	  items: undefined,
       party: undefined,
-      encounter_log: undefined,
-      shiny_log: undefined,
+    };
+
+    for (const endpoint in response) {
+      (store.instances[dataIndex].lastFetchedEndpoint as CreateMutable<TInstanceEndpointLastFetched>)[endpoint as TInstanceEndpoint] = Date.now();
+    }
+  } catch (error) {
+    console.error(`Error fetching data for ${apiURL}`, error);
+  }
+};
+
+// Function to fetch Fast updating data
+const fetchFastData = async (apiURL: string, dataIndex: number) => {
+  try {
+    const response: IInstanceData = await store.fetchAllInstanceEndpointData(apiURL);
+
+    // save response for this endpoint on this instance
+    store.instanceData[dataIndex] = response;
+
+    // update lastFetched value
+    store.instances[dataIndex].lastFetched = Date.now();
+
+    // update lastFetchedEndpoint value
+    store.instances[dataIndex].lastFetchedEndpoint = {
       encounter_rate: undefined,
       stats: undefined,
       emulator: undefined,
@@ -50,7 +97,9 @@ onMounted(async () => {
   // Set up periodic data fetching for each instance
   store.instances.forEach((_data, index) => {
     const { apiURL, dataIndex } = store.instances[index];
-    setInterval(() => fetchData(apiURL, dataIndex), 5000); // Fetch data every 5 seconds
+    setInterval(() => fetchEncounterData(apiURL, dataIndex), 5000); // Fetch data every 5 seconds
+	setInterval(() => fetchFastData(apiURL, dataIndex), 1000); // Fetch data every 1 second
+	setInterval(() => fetchSlowData(apiURL, dataIndex), 30000); // Fetch data every 30 seconds
   });
 });
 
