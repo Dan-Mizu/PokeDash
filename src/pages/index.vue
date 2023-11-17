@@ -97,9 +97,9 @@ onMounted(async () => {
   // Set up periodic data fetching for each instance
   store.instances.forEach((_data, index) => {
     const { apiURL, dataIndex } = store.instances[index];
-    setInterval(() => fetchEncounterData(apiURL, dataIndex), 5000); // Fetch data every 5 seconds
-	setInterval(() => fetchFastData(apiURL, dataIndex), 1000); // Fetch data every 1 second
-	setInterval(() => fetchSlowData(apiURL, dataIndex), 30000); // Fetch data every 30 seconds
+    setInterval(() => fetchEncounterData(apiURL, dataIndex), 28000); // Fetch data every 20 seconds
+	setInterval(() => fetchFastData(apiURL, dataIndex), 13000); // Fetch data every 10 second
+	setInterval(() => fetchSlowData(apiURL, dataIndex), 60000); // Fetch data every 30 seconds
   });
 });
 

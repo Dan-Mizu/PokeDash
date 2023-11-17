@@ -71,7 +71,7 @@ const encounterType = ref(0);
 
 <template>
 	<div :class="panelStyle">
-		<div class="flex flex-col h-[44vh] w-full self-start">
+		<div class="flex flex-col h-[52vh] w-full self-start">
 			<!-- Encounter Stats -->
 			<div class="flex flex-1 flex-grow w-full"></div>
 
@@ -114,7 +114,7 @@ const encounterType = ref(0);
 						v-for="encounteredPokemon in encounteredWildPokemonData"
 						class="gap-1 my-1"
 					>
-						<PokemonBadge :data="encounteredPokemon.pokemon" />
+						<EncounterBadge :data="encounteredPokemon.pokemon" />
 					</li>
 				</ul>
 				<ul
@@ -126,7 +126,7 @@ const encounterType = ref(0);
 						v-for="encounteredPokemon in encounteredShinyWildPokemonData"
 						class="gap-1 my-1"
 					>
-						<PokemonBadge :data="encounteredPokemon.pokemon" />
+						<EncounterBadge :data="encounteredPokemon.pokemon" />
 					</li>
 				</ul>
 			</div>

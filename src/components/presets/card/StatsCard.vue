@@ -49,6 +49,28 @@ const props = defineProps<{
 					}}</span>
 				</div>
 			</div>
+			
+			<!-- Shortest Phases Streak -->
+			<div
+				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
+			>
+				<div class="grid grid-flow-row text-left">
+					<span>Phase Streak Record</span>
+					<span
+						class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+						>{{
+							data.totals.phase_streak
+						}}</span
+					>
+				</div>
+				<div class="grid grid-flow-row text-right">
+					<span>Phase Streak Record Mon</span>
+					<span
+						class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+						>{{ data.totals.phase_streak_pokemon }}</span
+					>
+				</div>
+			</div>
 
 			<!-- Phase Highest IVSum -->
 			<div
@@ -103,27 +125,7 @@ const props = defineProps<{
 					}}</span>
 				</div>
 			</div>
-			<!-- Shortest Phases Streak -->
-			<div
-				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"
-			>
-				<div class="grid grid-flow-row text-left">
-					<span>Phase Streak Record</span>
-					<span
-						class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-						>{{
-							data.totals.phase_streak
-						}}</span
-					>
-				</div>
-				<div class="grid grid-flow-row text-right">
-					<span>Phase Streak Record Mon</span>
-					<span
-						class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-						>{{ data.totals.phase_streak_pokemon }}</span
-					>
-				</div>
-			</div>
+
 			<!-- Shiny Averages -->
 			<div
 				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"

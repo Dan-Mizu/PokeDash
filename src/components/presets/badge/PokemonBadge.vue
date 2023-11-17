@@ -14,10 +14,10 @@ const props = defineProps<{
 const viewport = useViewport();
 
 // extra info toggled
-const showExtraInfo: Ref<boolean> = ref(false);
-defineExpose({
-	showExtraInfo,
-});
+// const showExtraInfo: Ref<boolean> = ref(false);
+// defineExpose({
+//	showExtraInfo,
+//});
 
 // is sprite visible?
 const showSprite = computed(() => {
@@ -26,6 +26,9 @@ const showSprite = computed(() => {
 
 	return false;
 });
+
+
+const showExtraInfo = true;
 
 // get pokemon sprite
 const spriteSrc = ref("");
@@ -40,53 +43,74 @@ store
 			'grid gap-1 w-full',
 			viewport.isLessThan('full') || showExtraInfo
 				? 'grid-cols-1'
-				: 'grid-cols-2',
+				: 'grid-cols-1',
 		]"
 	>
-		<!-- Pokemon Sprite -->
-		<div
-			v-if="showSprite"
-			class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center w-full h-full"
-		>
-			<Spinner v-if="!spriteSrc" />
-			<img
-				v-else
-				class="rendering-pixelated"
-				:src="spriteSrc"
-				:title="data.name + (data.shiny ? ' (Shiny)' : '')"
-			/>
-		</div>
+
 
 		<!-- Pokemon Info -->
 		<div
-			class="bg-light-primary dark:bg-dark-primary rounded-lg full:flex full:flex-col hidden justify-start items-center py-2 px-2 w-full h-full"
+			class="bg-light-primary dark:bg-dark-primary rounded-lg full:flex full:flex-col hidden justify-start items-center py-1 px-1 w-full h-full"
 		>
-			<!-- Name / Shiny -->
+			<!-- Pokemon Sprite -->
 			<div
-				class="text-base flex justify-center items-center text-center content-center"
+				v-if="showSprite"
+				class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-left items-left w-full h-full"
 			>
-				<!-- Name -->
-				<span class="mr-1">{{ data.name }}</span>
-
-				<!-- Shiny -->
+				<Spinner v-if="!spriteSrc" />
+				<img
+					v-else
+					class="rendering-pixelated"
+					:src="spriteSrc"
+					:title="data.name + (data.shiny ? ' (Shiny)' : '')"
+				/>
+			
+				<!-- Name / Shiny -->
 				<div
-					class="bg-light-secondary dark:bg-dark-secondary rounded-md flex justify-center items-center p-1"
-					v-if="data.shiny"
+					class="text-base flex justify-center items-center text-center content-center"
 				>
-					<Icon
-						name="heroicons:sparkles-solid"
-						class="h-4 text-light-tertiary dark:text-dark-tertiary"
-					/>
+					<!-- Name -->
+					<span class="mr-1 text-s mb-1">{{ data.name }}</span>
+
+					<!-- Shiny -->
+					<div
+						class="bg-light-secondary dark:bg-dark-secondary rounded-md flex justify-center items-center p-1"
+						v-if="data.shiny"
+					>
+						<Icon
+							name="heroicons:sparkles-solid"
+							class="h-4 text-light-tertiary dark:text-dark-tertiary"
+						/>
+					</div>
+				</div>
+
+				<!-- Level -->
+				<div class="text-base flex justify-center items-center text-center w-full my-1">
+					<span class="text-xs">Lvl: {{ data.level }} </span>
+					<!-- Ability -->
+					<span class="text-base flex items-center mb-1">
+						<Icon
+							name="icon-park-solid:fire"
+							class="h-4 text-light-tertiary dark:text-dark-tertiary"
+						/>
+						<span class="text-xs ml-1"> {{ data.ability }} </span>
+					</span>
+					<!-- Held Item -->
+					<span
+						v-if="data.item.name != 'None'"
+						class="text-base flex items-center mb-1"
+					>
+						<Icon
+							name="mdi:sack"
+							class="h-4 text-light-tertiary dark:text-dark-tertiary"
+						/>
+						<span class="text-xs ml-1"> {{ data.item.name }}</span>
+					</span>
 				</div>
 			</div>
-
-			<!-- Level -->
-			<div class="text-base flex justify-center items-center text-center w-full my-1">
-				<span class="text-xs">Lvl: {{ data.level }}</span>
-			</div>
-
 			<!-- IV Sum -->
 			<div class="flex flex-col items-center justify-center text-center text-xs w-full my-1">
+			
 				<span class="mb-1">IV Sum: {{ data.IVSum }}</span>
 				<div class="bg-light-tertiary dark:bg-dark-tertiary rounded-full justify-center items-center w-[75%] h-2">
 					<div
@@ -96,80 +120,40 @@ store
 				</div>
 			</div>
 
-			<!-- Show More Button -->
-			<button
-				@click="showExtraInfo = !showExtraInfo"
-				class="cursor-pointer"
-			>
-				<Icon
-					v-if="showExtraInfo"
-					name="material-symbols:arrow-circle-up-outline"
-					class="h-6 text-light-tertiary dark:text-dark-tertiary hover:text-light-accent hover:dark:text-dark-accent"
-				/>
-				<Icon
-					v-else
-					name="material-symbols:arrow-circle-down"
-					class="h-6 text-light-tertiary dark:text-dark-tertiary hover:text-light-accent hover:dark:text-dark-accent"
-				/>
-			</button>
-
-			<!-- Show More Content -->
+			<!-- Move box -->
 			<div
 				v-if="showExtraInfo"
-				class="bg-light-secondary dark:bg-dark-secondary rounded-md py-2 px-3 mb-2"
+				class="bg-light-secondary dark:bg-dark-secondary rounded-md p-1"
 			>
-				<div class="mb-2">
-					<!-- Ability -->
-					<span class="text-base flex items-center mb-1">
-						<Icon
-							name="icon-park-solid:fire"
-							class="h-4 text-light-tertiary dark:text-dark-tertiary"
-						/>
-						<span class="text-xs ml-1">
-							{{ data.ability }}</span
-						></span
-					>
-
-					<!-- Held Item -->
-					<span
-						v-if="data.item.name != 'None'"
-						class="text-base flex items-center"
-					>
-						<Icon
-							name="mdi:sack"
-							class="h-4 text-light-tertiary dark:text-dark-tertiary"
-						/>
-						<span class="text-xs ml-1"> {{ data.item.name }}</span>
-					</span>
-				</div>
-
+				<div class="mb-1">
 				<!-- Moves List -->
-				<ul class="mb-1">
-					<li
-						v-for="move in data.moves"
-						:key="move.id"
-						class="flex flex-row items-center justify-between text-xs"
-					>
-						<span>
-							{{ move.name }}
-						</span>
-						<span class="mx-2"></span>
-						<span class="flex items-center">
-							<Icon
-								name="ph:hand-fist-fill"
-								class="h-3 text-light-tertiary dark:text-dark-tertiary"
-							/>
-							<span> {{ move.power }}</span>
-							<Icon
-								name="iconamoon:lightning-1-fill"
-								class="h-3 text-light-tertiary dark:text-dark-tertiary ml-1"
-							/>
-							<span>
-								{{ move.remaining_pp }}/{{ move.pp }}</span
-							></span
+					<ul class="mb-1">
+						<li
+							v-for="move in data.moves"
+							:key="move.id"
+							class="flex flex-row items-center justify-between text-xs"
 						>
-					</li>
-				</ul>
+							<span>
+								{{ move.name }}
+							</span>
+							<span class="mx-5"></span>
+							<span class="flex items-center">
+								<Icon
+									name="ph:hand-fist-fill"
+									class="h-3 text-light-tertiary dark:text-dark-tertiary"
+								/>
+								<span> {{ move.power }}</span>
+								<Icon
+									name="iconamoon:lightning-1-fill"
+									class="h-3 text-light-tertiary dark:text-dark-tertiary ml-1"
+								/>
+								<span>
+									{{ move.remaining_pp }}/{{ move.pp }}</span
+								></span
+							>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
