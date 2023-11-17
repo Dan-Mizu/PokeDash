@@ -15,7 +15,7 @@ const pokemonBadgeRefs = ref([]);
 		<!-- Expand/Shrink All -->
 		<div class="full:flex full:flex-col h-full py-2 gap-1 hidden">
 			<!-- Expand All -->
-			<IconButton
+			<!-- <IconButton
 				v-if="
 					!pokemonBadgeRefs.every(
 						(badge) => (badge as typeof PokemonBadge).showExtraInfo === true
@@ -30,9 +30,9 @@ const pokemonBadgeRefs = ref([]);
 							).showExtraInfo = true)
 					)
 				"
-			/>
+			/> -->
 			<!-- Shrink All -->
-			<IconButton
+			<!-- <IconButton
 				v-if="
 					!pokemonBadgeRefs.every(
 						(badge) => (badge as typeof PokemonBadge).showExtraInfo === false
@@ -47,14 +47,14 @@ const pokemonBadgeRefs = ref([]);
 							).showExtraInfo = false)
 					)
 				"
-			/>
+			/> -->
 		</div>
 
 		<!-- List of Pokemon -->
 		<ul class="grid grid-cols-2 w-full">
 			<!-- Individual Pokemon -->
 			<li
-				v-for="(pokemon, index) of data"
+				v-for="(pokemon, _index) of data"
 				class="m-1 items-center justify-center"
 			>
 				<!-- Pokemon Sprite -->

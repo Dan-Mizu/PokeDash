@@ -97,7 +97,7 @@ store
 			</div>
 
 			<!-- Show More Button -->
-			<button
+			<!-- <button
 				@click="showExtraInfo = !showExtraInfo"
 				class="cursor-pointer"
 			>
@@ -111,7 +111,7 @@ store
 					name="material-symbols:arrow-circle-down"
 					class="h-6 text-light-tertiary dark:text-dark-tertiary hover:text-light-accent hover:dark:text-dark-accent"
 				/>
-			</button>
+			</button> -->
 
 			<!-- Show More Content -->
 			<div
