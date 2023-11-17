@@ -2,8 +2,8 @@
 // props
 const props = withDefaults(
 	defineProps<{
-		instances: TInstanceReferences | IInstanceReference;
-		instanceData: TInstanceData | IInstanceData;
+		instances: string[] | string;
+		instanceData: IInstanceData[] | IInstanceData;
 		allowInstanceManipulation?: boolean;
 	}>(),
 	{ allowInstanceManipulation: true }
@@ -84,7 +84,7 @@ const modalAddInstanceOpen = ref(false);
 			>
 				<InstancePanel
 					:panelStyle="panelStyle"
-					:instanceData="(props.instanceData as TInstanceData)[props.instances[index].dataIndex]"
+					:instanceData="(props.instanceData as IInstanceData[])[index]"
 				/>
 			</li>
 

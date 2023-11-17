@@ -9,37 +9,18 @@ import defaults from "./defaults";
 // poke API for sprites
 const pokeAPI = "https://pokeapi.co/api/v2/pokemon/";
 
-// create instance references
-const createDefaultInstanceReferences = (apiURLs: string[]) => {
-	// init instance references
-	let instanceReferences = [];
-
-	// add each provided instance
-	for (const apiURL of apiURLs) {
-		instanceReferences.push({
-			apiURL: apiURL,
-			dataIndex: instanceReferences.length,
-		} as IInstanceReference);
-	}
-
-	// return created instance references object array
-	return instanceReferences;
-};
-
 export default defineStore(
 	"pokedash",
 	() => {
 		// values
-		const instances: Ref<TInstanceReferences> = ref(
+		const instances: Ref<string[]> = ref(
 			useRuntimeConfig().public.defaultAPIs
-				? createDefaultInstanceReferences(
-						useRuntimeConfig()
-							.public.defaultAPIs.replaceAll(" ", "")
-							.split(",")
-				  )
+				? useRuntimeConfig()
+						.public.defaultAPIs.replaceAll(" ", "")
+						.split(",")
 				: []
 		);
-		const instanceData: Ref<TInstanceData> = ref(defaults.instanceData);
+		const instanceData: Ref<IInstanceData[]> = ref(defaults.instanceData);
 		const pokemonSprites: Ref<{ [key: string]: string }> = ref(
 			defaults.pokemonSprites
 		);
@@ -47,7 +28,7 @@ export default defineStore(
 		// methods
 		const fetchInstanceEndpointData = async (
 			apiURL: string,
-			key: TInstanceEndpoint
+			key: InstanceDataKey
 		): Promise<InstanceData | null> => {
 			// fetch provided endpoint from provided api
 			return await useFetch("http://" + apiURL + "/" + key).then(
@@ -99,7 +80,7 @@ export default defineStore(
 			for (const key in newInstanceData) {
 				await fetchInstanceEndpointData(
 					apiURL,
-					key as TInstanceEndpoint
+					key as InstanceDataKey
 				).then((response) => {
 					newInstanceData[key] = response;
 				});
