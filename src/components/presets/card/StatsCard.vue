@@ -31,7 +31,7 @@ const props = defineProps<{
 
 <template>
 	<div :class="panelStyle">
-		<div class="grid gap-2 w-full p-2 text-xs">
+		<div class="grid gap-2 h-full w-full p-2 text-xs overflow-auto scrollbar-hidden">
 			<!-- Encounter Infos -->
 			<div
 				class="bg-light-primary dark:bg-dark-primary rounded-md grid grid-flow-col p-2 gap-2"

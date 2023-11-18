@@ -16,7 +16,7 @@ const pokemonBadgeRefs = ref([]);
 		<ul class="grid grid-cols-2 w-full">
 			<!-- Individual Pokemon -->
 			<li
-				v-for="(pokemon, index) of data"
+				v-for="(pokemon, _index) of data"
 				class="m-1 items-center justify-center"
 			>
 				<!-- Pokemon Sprite -->
