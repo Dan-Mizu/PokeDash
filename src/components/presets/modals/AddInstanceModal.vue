@@ -13,51 +13,25 @@ const inputComponent = ref();
 // submit
 const submit = () => {
 	// get input
-	const input = String(inputComponent.value.input);
+	const input = inputComponent.value.input;
 
 	// check if instance already exists
-	if (store.instances.map((instance) => instance.apiURL).includes(input)) {
+	if (store.instances.includes(input)) {
 		console.log("already exists");
 	}
 	// add instance
 	else {
-		// add instance to instance reference list
-		store.instances.push({
-			apiURL: input,
-			dataIndex: store.instanceData.length,
-		} as IInstanceReference);
+		// add instance api url to list
+		store.instances.push(input);
 
 		// queue instance api fetch
 		store
 			.fetchAllInstanceEndpointData(input)
 			.then(
 				(response: IInstanceData | undefined | null) =>
-					(store.instanceData[
-						store.instances[store.instances.length - 1].dataIndex
-					] = response as IInstanceData)
+					(store.instanceData[store.instances.length - 1] =
+						response as IInstanceData)
 			);
-
-		// update lastFetched value
-		store.instances[store.instances.length - 1].lastFetched = Date.now();
-
-		// update lastFetchedEndpoint value
-		store.instances[store.instances.length - 1].lastFetchedEndpoint = {
-			trainer: undefined,
-			items: undefined,
-			party: undefined,
-			encounter_log: undefined,
-			shiny_log: undefined,
-			encounter_rate: undefined,
-			stats: undefined,
-			emulator: undefined,
-		};
-		for (const endpoint in store.instanceData[
-			store.instances[store.instances.length - 1].dataIndex
-		] as IInstanceData)
-			(
-				store.instances[store.instances.length - 1]
-					.lastFetchedEndpoint as CreateMutable<TInstanceEndpointLastFetched>
-			)[endpoint as TInstanceEndpoint] = Date.now();
 	}
 };
 </script>

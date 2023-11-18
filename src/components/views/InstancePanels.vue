@@ -2,23 +2,28 @@
 // props
 const props = withDefaults(
 	defineProps<{
-		instances: TInstanceReferences | IInstanceReference;
-		instanceData: TInstanceData | IInstanceData;
+		instances: string[] | string;
+		instanceData: IInstanceData[] | IInstanceData;
 		allowInstanceManipulation?: boolean;
 	}>(),
 	{ allowInstanceManipulation: true }
 );
 
 // individual panel style
-const panelStyleBase =
+const columnStyleBase =
 	"bg-light-secondary dark:bg-dark-secondary px-2 py-1 mx-2 rounded-md flex flex-1 items-center justify-center";
-const panelStyle = [
-	"flex-[0.06] " + panelStyleBase,
-	"flex-[0.3] " + panelStyleBase,
-	"full:flex-[1] " + panelStyleBase,
-	"flex-[0.5] " + panelStyleBase,
-	"flex-[0.5] " + panelStyleBase,
+const columnStyle = [
+	"flex-[0.06] " + columnStyleBase,
+	"flex-[0.3] " + columnStyleBase,
+	"full:flex-[1] " + columnStyleBase,
+	"flex-[0.5] " + columnStyleBase,
+	"flex-[0.5] " + columnStyleBase,
 ];
+const panelStyleBase = " h-[38vh]";
+let panelStyle: string[] = [];
+for (let i = 0; i < columnStyle.length; i++) {
+	panelStyle[i] = columnStyle[i] + " " + panelStyleBase
+}
 
 // Add Instance Modal handling
 const modalAddInstanceOpen = ref(false);
@@ -46,27 +51,27 @@ const modalAddInstanceOpen = ref(false);
 				<div
 					:class="[
 						'truncate text-clip bg-transparent dark:bg-transparent',
-						panelStyle[0],
+						columnStyle[0],
 					]"
 				></div>
 
 				<!-- Trainer Info -->
-				<div :class="['truncate text-clip', panelStyle[1]]">
+				<div :class="['truncate text-clip', columnStyle[1]]">
 					<h1 class="font-bold">Trainer</h1>
 				</div>
 
 				<!-- Team Info -->
-				<div :class="['truncate text-clip', panelStyle[2]]">
+				<div :class="['truncate text-clip', columnStyle[2]]">
 					<h1 class="font-bold">Team</h1>
 				</div>
 
 				<!-- Encounter Info -->
-				<div :class="['truncate text-clip', panelStyle[3]]">
+				<div :class="['truncate text-clip', columnStyle[3]]">
 					<h1 class="font-bold">Encounters</h1>
 				</div>
 
 				<!-- Stats -->
-				<div :class="['truncate text-clip', panelStyle[4]]">
+				<div :class="['truncate text-clip', columnStyle[4]]">
 					<h1 class="font-bold">Stats</h1>
 				</div>
 			</li>
@@ -79,7 +84,7 @@ const modalAddInstanceOpen = ref(false);
 			>
 				<InstancePanel
 					:panelStyle="panelStyle"
-					:instanceData="(props.instanceData as TInstanceData)[props.instances[index].dataIndex]"
+					:instanceData="(props.instanceData as IInstanceData[])[index]"
 				/>
 			</li>
 

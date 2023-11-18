@@ -3,7 +3,7 @@ export default {
 	instances: [] as string[],
 
 	// cached instance data
-	instanceData: [] as TInstanceData,
+	instanceData: [] as IInstanceData[],
 
 	// cached pokemon sprites
 	pokemonSprites: {} as { [key: string]: string },

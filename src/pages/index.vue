@@ -22,32 +22,10 @@ onMounted(async () => {
 store.instances.forEach(async (_data, index) => {
 	// fetch all endpoints from each instance's api
 	await store
-		.fetchAllInstanceEndpointData(store.instances[index].apiURL)
+		.fetchAllInstanceEndpointData(store.instances[index])
 		.then((response: IInstanceData) => {
 			// save response for this endpoint on this instance
-			store.instanceData[store.instances[index].dataIndex] = response;
-
-			// update lastFetched value
-			store.instances[index].lastFetched = Date.now();
-
-			// update lastFetchedEndpoint value
-			store.instances[index].lastFetchedEndpoint = {
-				trainer: undefined,
-				items: undefined,
-				party: undefined,
-				encounter_log: undefined,
-				shiny_log: undefined,
-				encounter_rate: undefined,
-				stats: undefined,
-				emulator: undefined,
-			};
-			for (const endpoint in store.instanceData[
-				store.instances[index].dataIndex
-			] as IInstanceData)
-				(
-					store.instances[index]
-						.lastFetchedEndpoint as CreateMutable<TInstanceEndpointLastFetched>
-				)[endpoint as TInstanceEndpoint] = Date.now();
+			store.instanceData[index] = response;
 		});
 });
 
