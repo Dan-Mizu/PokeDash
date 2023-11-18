@@ -19,7 +19,7 @@ const columnStyle = [
 	"flex-[0.5] " + columnStyleBase,
 	"flex-[0.5] " + columnStyleBase,
 ];
-const panelStyleBase = " h-[35vh]";
+const panelStyleBase = " h-[38vh]";
 let panelStyle: string[] = [];
 for (let i = 0; i < columnStyle.length; i++) {
 	panelStyle[i] = columnStyle[i] + " " + panelStyleBase
