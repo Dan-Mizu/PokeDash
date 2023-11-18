@@ -459,7 +459,7 @@ interface IPokemon {
 /** Pokemon Stats */
 interface IPokemonStats {
 	attack: number;
-	defence: number;
+	defense: number;
 	hp: number;
 	spAttack: number;
 	spDefense: number;

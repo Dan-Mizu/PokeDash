@@ -1,11 +1,9 @@
 <script setup lang="ts">
-// utility functions
-import { pkmnRef } from "~/utility";
-
 // get state
 import useStore from "~/stores";
 const store = useStore();
 
+// props
 const props = defineProps<{
 	data: IPokemon;
 }>();
@@ -13,39 +11,32 @@ const props = defineProps<{
 // get viewport
 const viewport = useViewport();
 
-// extra info toggled
-const showExtraInfo: Ref<boolean> = ref(false);
-defineExpose({
-	showExtraInfo,
-});
-
-// is sprite visible?
-const showSprite = computed(() => {
-	// always show if in mobile mode
-	if (viewport.isLessThan("full") || !showExtraInfo.value) return true;
-
-	return false;
-});
-
 // get pokemon sprite
 const spriteSrc = ref("");
 store
 	.getPokemonSprite(props.data.natID, props.data.shiny)
 	.then((result) => (spriteSrc.value = result));
+
+// extra pokemon stats modal handling
+const modalPokemonStatsOpen = ref(false);
 </script>
 
 <template>
-	<div
+	<button
 		:class="[
 			'grid gap-1 w-full',
-			viewport.isLessThan('full') || showExtraInfo
+			viewport.isLessThan('full')
 				? 'grid-cols-1'
 				: 'grid-cols-2',
 		]"
+		@click="modalPokemonStatsOpen = true"
 	>
+
 		<!-- Pokemon Sprite -->
+		<!-- TODO: Why the hell does removing "v-if=true" cause the pokemon sprites to bug out ?? -->
 		<div
-			v-if="showSprite"
+		
+			v-if="true"
 			class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center w-full h-full"
 		>
 			<Spinner v-if="!spriteSrc" />
@@ -59,7 +50,8 @@ store
 
 		<!-- Pokemon Info -->
 		<div
-			class="bg-light-primary dark:bg-dark-primary rounded-lg full:flex full:flex-col hidden justify-start items-center py-2 px-2 w-full h-full"
+			v-if="viewport.isGreaterOrEquals('full')"
+			class="bg-light-primary dark:bg-dark-primary rounded-lg flex flex-col justify-start items-center py-2 px-2 w-full h-full"
 		>
 			<!-- Name / Shiny -->
 			<div
@@ -81,96 +73,27 @@ store
 			</div>
 
 			<!-- Level -->
-			<div class="text-base flex justify-center items-center text-center w-full my-1">
-				<span class="text-xs">Lvl: {{ data.level }}</span>
+			<div
+				class="bg-light-secondary dark:bg-dark-secondary rounded-md flex justify-center items-center px-2 py-1"
+			>
+				<span class="text-xs"> LVL {{ data.level }} </span>
 			</div>
 
 			<!-- IV Sum -->
-			<div class="flex flex-col items-center justify-center text-center text-xs w-full my-1">
-				<span class="mb-1">IV Sum: {{ data.IVSum }}</span>
-				<div class="bg-light-tertiary dark:bg-dark-tertiary rounded-full justify-center items-center w-[75%] h-2">
-					<div
-						class="bg-light-accent dark:bg-dark-accent rounded-full h-2"
-						:style="'width: '+ Math.ceil((data.IVSum/186)*100) + '%'"
-					></div>
-				</div>
-			</div>
-
-			<!-- Show More Button -->
-			<button
-				@click="showExtraInfo = !showExtraInfo"
-				class="cursor-pointer"
-			>
-				<Icon
-					v-if="showExtraInfo"
-					name="material-symbols:arrow-circle-up-outline"
-					class="h-6 text-light-tertiary dark:text-dark-tertiary hover:text-light-accent hover:dark:text-dark-accent"
-				/>
-				<Icon
-					v-else
-					name="material-symbols:arrow-circle-down"
-					class="h-6 text-light-tertiary dark:text-dark-tertiary hover:text-light-accent hover:dark:text-dark-accent"
-				/>
-			</button>
-
-			<!-- Show More Content -->
 			<div
-				v-if="showExtraInfo"
-				class="bg-light-secondary dark:bg-dark-secondary rounded-md py-2 px-3 mb-2"
+				class="flex flex-col items-center justify-center text-center text-xs w-full my-1"
 			>
-				<div class="mb-2">
-					<!-- Ability -->
-					<span class="text-base flex items-center mb-1">
-						<Icon
-							name="icon-park-solid:fire"
-							class="h-4 text-light-tertiary dark:text-dark-tertiary"
-						/>
-						<span class="text-xs ml-1">
-							{{ data.ability }}</span
-						></span
-					>
-
-					<!-- Held Item -->
-					<span
-						v-if="data.item.name != 'None'"
-						class="text-base flex items-center"
-					>
-						<Icon
-							name="mdi:sack"
-							class="h-4 text-light-tertiary dark:text-dark-tertiary"
-						/>
-						<span class="text-xs ml-1"> {{ data.item.name }}</span>
-					</span>
-				</div>
-
-				<!-- Moves List -->
-				<ul class="mb-1">
-					<li
-						v-for="move in data.moves"
-						:key="move.id"
-						class="flex flex-row items-center justify-between text-xs"
-					>
-						<span>
-							{{ move.name }}
-						</span>
-						<span class="mx-2"></span>
-						<span class="flex items-center">
-							<Icon
-								name="ph:hand-fist-fill"
-								class="h-3 text-light-tertiary dark:text-dark-tertiary"
-							/>
-							<span> {{ move.power }}</span>
-							<Icon
-								name="iconamoon:lightning-1-fill"
-								class="h-3 text-light-tertiary dark:text-dark-tertiary ml-1"
-							/>
-							<span>
-								{{ move.remaining_pp }}/{{ move.pp }}</span
-							></span
-						>
-					</li>
-				</ul>
+				<IvSumProgressBar :IVSum="data.IVSum" />
 			</div>
 		</div>
-	</div>
+	</button>
+
+	<!-- Add Instance Modal -->
+	<PokemonStatsModal
+		v-if="data"
+		:open="modalPokemonStatsOpen"
+		@closeModal="modalPokemonStatsOpen = false"
+		:pokemon="data"
+		:spriteSrc="spriteSrc"
+	/>
 </template>

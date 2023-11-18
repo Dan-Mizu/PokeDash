@@ -45,6 +45,10 @@ const props = defineProps<{
 			!dataExists(props.instanceData.shiny_log)
 		"
 	/>
+	<div
+		v-else
+		:class="props.panelStyle[3]"
+	/>
 	<EncountersCard
 		v-else
 		:panel-style="props.panelStyle[3]"
@@ -56,6 +60,10 @@ const props = defineProps<{
 	<LoadingCard
 		:panel-style="props.panelStyle[4]"
 		v-if="!props.instanceData || !dataExists(props.instanceData.stats)"
+	/>
+	<div
+		v-else
+		:class="props.panelStyle[3]"
 	/>
 	<StatsCard
 		v-else
