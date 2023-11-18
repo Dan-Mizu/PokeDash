@@ -17,27 +17,27 @@ const progressDetails = computed(() => {
 		// Perfect
 		case progress == 100:
 			return {
-				color: "perfect",
+				color: "blue",
 				text: "Perfect IVs!",
 			};
 		// Bad
 		case progress < 50:
 			return {
-				color: "bad",
+				color: "red",
 			};
 		// Average
 		case progress < 70:
 			return {
-				color: "average",
+				color: "yellow",
 			};
 		// Great
 		case progress < 100:
 			return {
-				color: "great",
+				color: "green",
 			};
 		default:
 			return {
-				color: "bad",
+				color: "red",
 			};
 	}
 });
@@ -47,33 +47,23 @@ const progressDetails = computed(() => {
 	<!-- Bar -->
 	<UProgress
 		:ui="{
+			strategy: 'override',
 			progress: {
 				track: 'bg-light-tertiary dark:bg-dark-tertiary',
-				color:
-					'text-' +
-					progressDetails.color +
-					' dark:text-' +
-					progressDetails.color,
 			},
 		}"
 		:value="IVSum"
 		:max="IVSumMax"
+		:color="progressDetails.color"
 	>
 		<!-- Indicator -->
 		<template #indicator>
 			<div class="text-xs font-bold">
-				<span
-					:class="[
-						progress === 100
-							? 'text-' + progressDetails.color
-							: 'text-light-text dark:text-dark-text',
-					]"
-					>{{
-						progressDetails?.text
-							? progressDetails.text
-							: "IV Sum: " + IVSum
-					}}</span
-				>
+				<span class="text-light-text dark:text-dark-text">{{
+					progressDetails?.text
+						? progressDetails.text
+						: "IV Sum: " + IVSum
+				}}</span>
 			</div>
 		</template>
 	</UProgress>
