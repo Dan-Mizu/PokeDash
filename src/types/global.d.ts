@@ -1,3 +1,40 @@
+type CreateMutable<Type> = {
+	[Property in keyof Type]: Type[Property];
+};
+
+/** Instance References */
+type TInstanceReferences = IInstanceReference[];
+
+/** Instance Reference */
+interface IInstanceReference {
+	/** Title of the instance set by the user */
+	title: string | null | undefined;
+	/** The URL of the REST API for this instance */
+	apiURL: string;
+	/** Index of this instance's data within the InstanceData object array */
+	dataIndex: number;
+	/** UNIX Timestamp of the last time this api was queried for data */
+	lastFetched: number | undefined;
+	/** UNIX Timestamp of the last time the relative api endpoint was queried for data */
+	lastFetchedEndpoint:
+		| CreateMutable<TInstanceEndpointLastFetched>
+		| undefined;
+}
+
+type TInstanceEndpointLastFetched = {
+	trainer: number | undefined;
+	items: number | undefined;
+	party: number | undefined;
+	encounter_log: number | undefined;
+	shiny_log: number | undefined;
+	encounter_rate: number | undefined;
+	stats: number | undefined;
+	emulator: number | undefined;
+};
+
+/** Instance Data */
+type TInstanceData = TInstanceData;
+
 /** Collection of Instance Data from each API endpoint */
 interface IInstanceData {
 	trainer: ITrainer;
@@ -22,7 +59,7 @@ type InstanceData =
 	| IEmulator;
 
 /** Possible Endpoints */
-type InstanceDataKey =
+type TInstanceEndpoint =
 	| "trainer"
 	| "items"
 	| "party"
