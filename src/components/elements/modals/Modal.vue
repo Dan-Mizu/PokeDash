@@ -1,13 +1,7 @@
 <script setup lang="ts">
-const props = withDefaults(
-	defineProps<{
-		open: boolean;
-		showFooter?: boolean;
-	}>(),
-	{
-		showFooter: true,
-	}
-);
+const props = defineProps<{
+	open: boolean;
+}>();
 
 // sync local open state to parent
 const isOpen = ref(props.open);
@@ -23,6 +17,7 @@ watch(
 			v-model="isOpen"
 			@close="$emit('closeModal')"
 			:ui="{
+				background: '',
 				container: 'flex items-center justify-center',
 				base: '',
 				overlay: {
@@ -39,21 +34,18 @@ watch(
 					body: { base: 'text-center' },
 					header: {
 						base: 'text-center',
-						padding: '',
+						padding: 'px-4 pb-6 sm:px-6',
 					},
 					footer: {
 						base: 'text-center',
-						padding: '',
+						padding: 'px-4 pt-6 pb-8 sm:px-6',
 					},
 				}"
 			>
 				<!-- Modal Header -->
 				<template #header>
-					<div class="flex items-center justify-center relative">
-						<!-- Header Content -->
+					<div class="flex items-center relative justify-center">
 						<slot class="flex float-none" name="header" />
-
-						<!-- Close Button -->
 						<div class="-my-1 ml-5 absolute right-0">
 							<IconButton
 								icon="i-heroicons-x-mark-20-solid"
@@ -67,7 +59,7 @@ watch(
 				<slot />
 
 				<!-- Modal Footer -->
-				<template #footer v-if="showFooter">
+				<template #footer>
 					<slot name="footer" />
 				</template>
 			</UCard>
