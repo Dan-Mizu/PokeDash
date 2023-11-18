@@ -1,31 +1,15 @@
 <script setup lang="ts">
-// utility functions
-import { pkmnRef } from "~/utility";
-
 // get state
 import useStore from "~/stores";
 const store = useStore();
 
+// props
 const props = defineProps<{
 	data: IPokemon;
 }>();
 
 // get viewport
 const viewport = useViewport();
-
-// extra info toggled
-const showExtraInfo: Ref<boolean> = ref(false);
-defineExpose({
-	showExtraInfo,
-});
-
-// is sprite visible?
-const showSprite = computed(() => {
-	// always show if in mobile mode
-	if (viewport.isLessThan("full") || !showExtraInfo.value) return true;
-
-	return false;
-});
 
 // get pokemon sprite
 const spriteSrc = ref("");
@@ -41,15 +25,18 @@ const modalPokemonStatsOpen = ref(false);
 	<button
 		:class="[
 			'grid gap-1 w-full',
-			viewport.isLessThan('full') || showExtraInfo
+			viewport.isLessThan('full')
 				? 'grid-cols-1'
 				: 'grid-cols-2',
 		]"
 		@click="modalPokemonStatsOpen = true"
 	>
+
 		<!-- Pokemon Sprite -->
+		<!-- TODO: Why the hell does removing "v-if=true" cause the pokemon sprites to bug out ?? -->
 		<div
-			v-if="showSprite"
+		
+			v-if="true"
 			class="bg-light-primary dark:bg-dark-primary rounded-lg flex justify-center items-center w-full h-full"
 		>
 			<Spinner v-if="!spriteSrc" />
@@ -63,7 +50,8 @@ const modalPokemonStatsOpen = ref(false);
 
 		<!-- Pokemon Info -->
 		<div
-			class="bg-light-primary dark:bg-dark-primary rounded-lg full:flex full:flex-col hidden justify-start items-center py-2 px-2 w-full h-full"
+			v-if="viewport.isGreaterOrEquals('full')"
+			class="bg-light-primary dark:bg-dark-primary rounded-lg flex flex-col justify-start items-center py-2 px-2 w-full h-full"
 		>
 			<!-- Name / Shiny -->
 			<div
