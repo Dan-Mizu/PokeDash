@@ -76,7 +76,8 @@ const props = defineProps<{
 		v-if="
 			!props.instanceData ||
 			!dataExists(props.instanceData.encounter_log) ||
-			!dataExists(props.instanceData.shiny_log)
+			!dataExists(props.instanceData.shiny_log) ||
+			!dataExists(props.instanceData.stats)
 		"
 	/>
 	<div
@@ -88,6 +89,7 @@ const props = defineProps<{
 		:panel-style="props.panelStyle[3]"
 		:encounter-log-data="props.instanceData.encounter_log"
 		:shiny-log-data="props.instanceData.shiny_log"
+		:stats-data="props.instanceData.stats"
 	/>
 
 	<!-- Stats -->
