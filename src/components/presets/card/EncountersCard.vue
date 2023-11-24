@@ -82,6 +82,12 @@ const pokemonNames = [
 	...pokemon.generation[3],
 ];
 const pokemonSelected = ref(pokemonNames[0]);
+const pokemonSelectedName = ref(
+	pokemonNames[0].charAt(0).toUpperCase() + pokemonNames[0].slice(1)
+);
+const pokemonSelectedData = ref(
+	props.statsData.pokemon[pokemonSelectedName.value]
+);
 
 // get target shiny pokemon sprite
 const spriteSrc = ref("");
@@ -94,6 +100,15 @@ updateSprite();
 
 // watch for changes to selected target pokemon
 watch(pokemonSelected, () => {
+	// update selected pokemon name
+	pokemonSelectedName.value =
+		pokemonSelected.value.charAt(0).toUpperCase() +
+		pokemonSelected.value.slice(1);
+
+	// update selected pokemon data
+	pokemonSelectedData.value =
+		props.statsData.pokemon[pokemonSelectedName.value];
+
 	// clear current spriteSrc
 	spriteSrc.value = "";
 
@@ -127,8 +142,7 @@ watch(pokemonSelected, () => {
 						>
 							<template #label>
 								<span class="truncate">{{
-									pokemonSelected.charAt(0).toUpperCase() +
-									pokemonSelected.slice(1)
+									pokemonSelectedName
 								}}</span>
 							</template>
 							<template #option="{ option: pokemonName }">
@@ -154,148 +168,67 @@ watch(pokemonSelected, () => {
 					<div
 						class="bg-light-primary dark:bg-dark-primary rounded-lg flex flex-col justify-center items-start gap-2 px-2"
 					>
-						<div class="grid grid-flow-row font-bold text-xs gap-1">
-							<!-- Total / Phase Encounters -->
-							<div class="grid grid-flow-row text-left">
-								<span>Total / Phase Encounters</span>
+						<div class="grid grid-flow-row text-xs gap-1">
+							<!-- Total Encounters -->
+							<div class="grid grid-flow-row text-left text-s font-bold">
+								<span>Phase / Total Encounters</span>
 								<span
-									class="text-s text-light-text-placeholder dark:text-dark-text-placeholder"
+									class=" text-xs self-end text-light-text-placeholder dark:text-dark-text-placeholder"
 									>{{
-										statsData.pokemon[
-											pokemonSelected
-												.charAt(0)
-												.toUpperCase() +
-												pokemonSelected.slice(1)
-										].encounters
-											? statsData.pokemon[
-													pokemonSelected
-														.charAt(0)
-														.toUpperCase() +
-														pokemonSelected.slice(1)
-											  ].encounters
-											: "None"
-									}} / {{ statsData.pokemon[
-											pokemonSelected
-												.charAt(0)
-												.toUpperCase() +
-												pokemonSelected.slice(1)
-										].phase_encounters
-											? statsData.pokemon[
-													pokemonSelected
-														.charAt(0)
-														.toUpperCase() +
-														pokemonSelected.slice(1)
-											  ].phase_encounters
+																				
+										pokemonSelectedData &&
+										pokemonSelectedData.phase_encounters
+											? pokemonSelectedData.phase_encounters
+											: "0" 
+									}} / {{
+										pokemonSelectedData &&
+										pokemonSelectedData.encounters
+											? pokemonSelectedData.encounters
 											: "None"
 									}}
-								</span>
-							</div>
-
-							<!-- Shiny Average -->
-							<div
-								class="grid grid-flow-row font-bold  text-left"
-								v-if="
-									statsData.pokemon[
-										pokemonSelected
-											.charAt(0)
-											.toUpperCase() +
-											pokemonSelected.slice(1)
-									].encounters
-								"
-							>
-								<span>Shiny Average</span>
-								<span
-									class="text-s self-end text-light-text-placeholder dark:text-dark-text-placeholder"
-									>{{
-										statsData.pokemon[
-											pokemonSelected
-												.charAt(0)
-												.toUpperCase() +
-												pokemonSelected.slice(1)
-										].shiny_average
-											? statsData.pokemon[
-													pokemonSelected
-														.charAt(0)
-														.toUpperCase() +
-														pokemonSelected.slice(1)
-											  ].shiny_average
-											: "None"
-									}}</span
+									</span
 								>
 							</div>
 
-							<!-- Phase IV Sums -->
-							<div class="font-bold grid grid-flow-row text-left">
-								<span>Phase IV Sums</span>
+							<!-- Last Encounter Time -->
+							<div
+								class="grid grid-flow-row text-left text-s font-bold"
+								v-if="
+									pokemonSelectedData &&
+									pokemonSelectedData.encounters
+								"
+							>
+								<span>Phase/Total Highest IVSums</span>
 								<span
-									class="text-s self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+									class="text-xs self-end text-light-text-placeholder dark:text-dark-text-placeholder"
 									>{{
-										statsData.pokemon[
-											pokemonSelected
-												.charAt(0)
-												.toUpperCase() +
-												pokemonSelected.slice(1)
-										].phase_highest_iv_sum
-											? statsData.pokemon[
-													pokemonSelected
-														.charAt(0)
-														.toUpperCase() +
-														pokemonSelected.slice(1)
-											  ].phase_highest_iv_sum
-											: "None"
+																				
+										pokemonSelectedData &&
+										pokemonSelectedData.total_lowest_iv_sum
+											? pokemonSelectedData.phase_highest_iv_sum
+											: "0" 
 									}} / {{
-										statsData.pokemon[
-											pokemonSelected
-												.charAt(0)
-												.toUpperCase() +
-												pokemonSelected.slice(1)
-										].phase_lowest_iv_sum
-											? statsData.pokemon[
-													pokemonSelected
-														.charAt(0)
-														.toUpperCase() +
-														pokemonSelected.slice(1)
-											  ].phase_lowest_iv_sum
+										pokemonSelectedData &&
+										pokemonSelectedData.total_highest_iv_sum
+											? pokemonSelectedData.total_highest_iv_sum
 											: "None"
 									}}
-									
-								</span>
+									</span
+								>
 							</div>
-							<!-- Total IV Sums -->
-							<div class="grid grid-flow-row font-bold text-left">
-								<span>Total IV Sums</span>
+
+							<!-- Shiny Encounters -->
+							<div class="grid grid-flow-row text-left text-s font-bold">
+								<span>Shiny Average</span>
 								<span
-									class="text-s self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+									class="text-xs self-end text-light-text-placeholder dark:text-dark-text-placeholder"
 									>{{
-										statsData.pokemon[
-											pokemonSelected
-												.charAt(0)
-												.toUpperCase() +
-												pokemonSelected.slice(1)
-										].total_highest_iv_sum
-											? statsData.pokemon[
-													pokemonSelected
-														.charAt(0)
-														.toUpperCase() +
-														pokemonSelected.slice(1)
-											  ].total_highest_iv_sum
-											: "None"
-									}} / {{
-										statsData.pokemon[
-											pokemonSelected
-												.charAt(0)
-												.toUpperCase() +
-												pokemonSelected.slice(1)
-										].total_lowest_iv_sum
-											? statsData.pokemon[
-													pokemonSelected
-														.charAt(0)
-														.toUpperCase() +
-														pokemonSelected.slice(1)
-											  ].total_lowest_iv_sum
-											: "None"
-									}}
-								</span>
+										pokemonSelectedData &&
+										pokemonSelectedData.shiny_average
+											? pokemonSelectedData.shiny_average
+											: "0 / " + pokemonSelectedData.encounters
+									}}</span
+								>
 							</div>
 						</div>
 					</div>
