@@ -82,6 +82,12 @@ const pokemonNames = [
 	...pokemon.generation[3],
 ];
 const pokemonSelected = ref(pokemonNames[0]);
+const pokemonSelectedName = ref(
+	pokemonNames[0].charAt(0).toUpperCase() + pokemonNames[0].slice(1)
+);
+const pokemonSelectedData = ref(
+	props.statsData.pokemon[pokemonSelectedName.value]
+);
 
 // get target shiny pokemon sprite
 const spriteSrc = ref("");
@@ -94,6 +100,15 @@ updateSprite();
 
 // watch for changes to selected target pokemon
 watch(pokemonSelected, () => {
+	// update selected pokemon name
+	pokemonSelectedName.value =
+		pokemonSelected.value.charAt(0).toUpperCase() +
+		pokemonSelected.value.slice(1);
+
+	// update selected pokemon data
+	pokemonSelectedData.value =
+		props.statsData.pokemon[pokemonSelectedName.value];
+
 	// clear current spriteSrc
 	spriteSrc.value = "";
 
@@ -127,8 +142,7 @@ watch(pokemonSelected, () => {
 						>
 							<template #label>
 								<span class="truncate">{{
-									pokemonSelected.charAt(0).toUpperCase() +
-									pokemonSelected.slice(1)
+									pokemonSelectedName
 								}}</span>
 							</template>
 							<template #option="{ option: pokemonName }">
@@ -161,18 +175,9 @@ watch(pokemonSelected, () => {
 								<span
 									class="font-bold text-sm text-light-text-placeholder dark:text-dark-text-placeholder"
 									>{{
-										statsData.pokemon[
-											pokemonSelected
-												.charAt(0)
-												.toUpperCase() +
-												pokemonSelected.slice(1)
-										].encounters
-											? statsData.pokemon[
-													pokemonSelected
-														.charAt(0)
-														.toUpperCase() +
-														pokemonSelected.slice(1)
-											  ].encounters
+										pokemonSelectedData &&
+										pokemonSelectedData.encounters
+											? pokemonSelectedData.encounters
 											: "None"
 									}}</span
 								>
@@ -182,12 +187,8 @@ watch(pokemonSelected, () => {
 							<div
 								class="grid grid-flow-row text-left"
 								v-if="
-									statsData.pokemon[
-										pokemonSelected
-											.charAt(0)
-											.toUpperCase() +
-											pokemonSelected.slice(1)
-									].encounters
+									pokemonSelectedData &&
+									pokemonSelectedData.encounters
 								"
 							>
 								<span>Last Encounter</span>
@@ -195,12 +196,7 @@ watch(pokemonSelected, () => {
 									class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
 									>{{
 										new Date(
-											statsData.pokemon[
-												pokemonSelected
-													.charAt(0)
-													.toUpperCase() +
-													pokemonSelected.slice(1)
-											].last_encounter_time_unix
+											pokemonSelectedData.last_encounter_time_unix
 										).toLocaleTimeString("en-US")
 									}}</span
 								>
@@ -212,18 +208,9 @@ watch(pokemonSelected, () => {
 								<span
 									class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
 									>{{
-										statsData.pokemon[
-											pokemonSelected
-												.charAt(0)
-												.toUpperCase() +
-												pokemonSelected.slice(1)
-										].shiny_encounters
-											? statsData.pokemon[
-													pokemonSelected
-														.charAt(0)
-														.toUpperCase() +
-														pokemonSelected.slice(1)
-											  ].shiny_encounters
+										pokemonSelectedData &&
+										pokemonSelectedData.shiny_encounters
+											? pokemonSelectedData.shiny_encounters
 											: "None"
 									}}</span
 								>
