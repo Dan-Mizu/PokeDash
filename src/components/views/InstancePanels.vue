@@ -13,16 +13,21 @@ const props = withDefaults(
 const columnStyleBase =
 	"bg-light-secondary dark:bg-dark-secondary px-2 py-1 mx-2 rounded-md flex flex-1 items-center justify-center";
 const columnStyle = [
+	// Sidebar
 	"flex-[0.06] " + columnStyleBase,
+	// Trainer
 	"flex-[0.3] " + columnStyleBase,
-	"full:flex-[1] " + columnStyleBase,
+	// Team
+	"full:flex-[0.8] " + columnStyleBase,
+	// Encounters
 	"flex-[0.5] " + columnStyleBase,
+	// Stats
 	"flex-[0.5] " + columnStyleBase,
 ];
 const panelStyleBase = " h-[38vh]";
 let panelStyle: string[] = [];
 for (let i = 0; i < columnStyle.length; i++) {
-	panelStyle[i] = columnStyle[i] + " " + panelStyleBase
+	panelStyle[i] = columnStyle[i] + " " + panelStyleBase;
 }
 
 // Add Instance Modal handling
