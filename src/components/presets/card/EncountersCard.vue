@@ -170,48 +170,63 @@ watch(pokemonSelected, () => {
 					>
 						<div class="grid grid-flow-row text-xs gap-1">
 							<!-- Total Encounters -->
-							<div class="grid grid-flow-row text-left">
-								<span>Total Encounters</span>
+							<div class="grid grid-flow-row text-left text-s font-bold">
+								<span>Phase / Total Encounters</span>
 								<span
-									class="font-bold text-sm text-light-text-placeholder dark:text-dark-text-placeholder"
+									class=" text-xs self-end text-light-text-placeholder dark:text-dark-text-placeholder"
 									>{{
+																				
+										pokemonSelectedData &&
+										pokemonSelectedData.phase_encounters
+											? pokemonSelectedData.phase_encounters
+											: "0" 
+									}} / {{
 										pokemonSelectedData &&
 										pokemonSelectedData.encounters
 											? pokemonSelectedData.encounters
 											: "None"
-									}}</span
+									}}
+									</span
 								>
 							</div>
 
 							<!-- Last Encounter Time -->
 							<div
-								class="grid grid-flow-row text-left"
+								class="grid grid-flow-row text-left text-s font-bold"
 								v-if="
 									pokemonSelectedData &&
 									pokemonSelectedData.encounters
 								"
 							>
-								<span>Last Encounter</span>
+								<span>Phase/Total Highest IVSums</span>
 								<span
-									class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+									class="text-xs self-end text-light-text-placeholder dark:text-dark-text-placeholder"
 									>{{
-										new Date(
-											pokemonSelectedData.last_encounter_time_unix
-										).toLocaleTimeString("en-US")
-									}}</span
+																				
+										pokemonSelectedData &&
+										pokemonSelectedData.total_lowest_iv_sum
+											? pokemonSelectedData.phase_highest_iv_sum
+											: "0" 
+									}} / {{
+										pokemonSelectedData &&
+										pokemonSelectedData.total_highest_iv_sum
+											? pokemonSelectedData.total_highest_iv_sum
+											: "None"
+									}}
+									</span
 								>
 							</div>
 
 							<!-- Shiny Encounters -->
-							<div class="grid grid-flow-row text-left">
-								<span>Shiny Encounters</span>
+							<div class="grid grid-flow-row text-left text-s font-bold">
+								<span>Shiny Average</span>
 								<span
-									class="font-bold text-sm self-end text-light-text-placeholder dark:text-dark-text-placeholder"
+									class="text-xs self-end text-light-text-placeholder dark:text-dark-text-placeholder"
 									>{{
 										pokemonSelectedData &&
-										pokemonSelectedData.shiny_encounters
-											? pokemonSelectedData.shiny_encounters
-											: "None"
+										pokemonSelectedData.shiny_average
+											? pokemonSelectedData.shiny_average
+											: "0 / " + pokemonSelectedData.encounters
 									}}</span
 								>
 							</div>
